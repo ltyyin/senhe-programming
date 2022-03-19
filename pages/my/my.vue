@@ -1,18 +1,43 @@
 <template>
 	<view>
-		我的页面
+		<button type="default" @click="sendNet">发起网路请求</button>
 	</view>
 </template>
 
 <script>
+	import request from '@/common/utils/request.js'
+	import { msg } from '@/common/utils/tip.js'
+	
 	export default {
-		data() {
+		data(){
 			return {
-				
+				name: 'lisa'
+			}
+		},
+		onNavigationBarButtonTap(event) {
+			if(event.index === 0) {
+				uni.scanCode({
+					success:(res) => {
+						uni.navigateTo({
+							url: `/pages/public/web-view?url=${res.result}`
+						})
+					},
+					fail:() => {
+						msg({title:'扫码失败！'})
+					}
+				})
 			}
 		},
 		methods: {
-			
+			async	sendNet() {
+				try{
+					const result = await request()
+					msg({title: '请求成功!',icon: 'error'})
+					console.log(result)
+				}catch(e){
+					console.log(e)
+				}
+			}
 		}
 	}
 </script>
