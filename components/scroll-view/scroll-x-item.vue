@@ -17,7 +17,6 @@
 				<text class="price">
 					<text class="current" v-if="courseInfo.isFree">免费</text>
 					<text class="current" v-else>￥{{courseInfo.priceDiscount}}</text>
-					<!-- <text class="original">￥34</text> -->
 				</text>
 				<text class="study">
 					<text class="iconfont icon-bofang"></text>
@@ -44,11 +43,12 @@
 <style lang="scss">
 	.scroll-course-item {
 		$frameWidth: 260rpx;
-		$frameHeight: 300rpx;	
+		$frameHeight: 300rpx;
 		
-		box-sizing: border-box;			
 		width: $frameWidth;
 		height: $frameHeight;	
+		overflow: hidden;		
+		box-sizing: border-box;		
 		background-color: #fff;
 		box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 		border-radius: 10rpx;
@@ -62,8 +62,7 @@
 		
 		.image-wrapper {
 			position: relative;
-			border-radius: 30rpx;
-			
+						
 			.time {
 				position: absolute;
 				bottom: 15rpx;
@@ -128,9 +127,7 @@
 					top: 5rpx;
 					
 					.iconfont {
-						left: -30rpx;
-						top: 2rpx;
-						position: absolute;
+						margin-right: 5rpx;
 						font-size: 25rpx;							
 					}
 				}

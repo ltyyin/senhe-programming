@@ -1,42 +1,43 @@
 <template>
 	<view class="home-container">
-		<!-- 自定义的搜索栏 -->
+		<!-- 小程序自定义的搜索栏 -->
+		<!-- #ifdef MP -->
 		<search-input></search-input>
-		
+		<!-- #endif -->
+			
+		<!-- 自定义的刷新样式 -->
 		<mescroll-body-diy ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :bottombar="false" :down="downOption" :up="upOption">
 			<!-- 轮播图 -->
-			<banner-img :bannerList="bannerList"></banner-img>
+			<banner-img :banner-list="bannerList"></banner-img>
 			
 			<!-- 新闻提示 -->
-			<news :newsList="newsList"></news>
+			<news :news-list="newsList"></news>
 			
 			<!-- 图标导航栏 -->
-			<nav-list :navList="navList"></nav-list>
+			<nav-list :nav-list="navList"></nav-list>
 			
 			<!-- 课程推荐框架 -->
 			<course-frame>
-				<scroll-course :courseList="recommendCourses.records" :scroll-x="true"></scroll-course>
+				<scroll-course :scroll-x="true" :course-list="recommendCourses.records"></scroll-course>
 			</course-frame>
 			
 			<!-- 课程推荐框架 -->
 			<course-frame titleName="新上好课">
-				<swiper-course :courseList="newCourseList.records">
+				<swiper-course :course-list="newCourseList.records">
 					<swiper-cover :cover-img="newCourseList.mainCover"></swiper-cover>
 				</swiper-course>
 			</course-frame>
 			
 			<course-frame titleName="免费好课">
-				<swiper-course :courseList="freeCourseList.records">
-					<swiper-cover cover-img="/static/recommendCover/IMG_0003.png"></swiper-cover>
+				<swiper-course :course-list="freeCourseList.records">
+					<swiper-cover :cover-img="freeCourseList.mainCover"></swiper-cover>
 				</swiper-course>
 			</course-frame>		
 			
 			
 			<!-- scroll滚动栏课程 -->
 			<course-frame titleName="课程精选">
-				<scroll-course :scroll-y="true">
-					<scroll-y-item v-for="(item,index) of choicestCourseList.records" :key="index" :course-info="item"></scroll-y-item>
-				</scroll-course>
+				<scroll-course :scroll-y="true" :course-list="choicestCourseList.records"></scroll-course>
 			</course-frame>			
 		</mescroll-body-diy>	
 		
@@ -51,9 +52,7 @@
 	import courseFrame from '@/components/course-frame.vue'
 	import scrollCourse from '@/components/scroll-view/scroll-course.vue'
 	import swiperCourse from '@/components/swiper-view/swiper-course.vue'
-	import swiperCover from '@/components/swiper-view/swiper-cover.vue'
-	import scrollYItem from '@/components/scroll-view/scroll-y-item.vue'
-	
+	import swiperCover from '@/components/swiper-view/swiper-cover.vue'	
 	// 导入请求api
 	import apiCourse from '@/api/course.js'
 	// 导入信息提示
@@ -61,9 +60,11 @@
 	// 导入自定义滚动样式插件混合
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	import MescrollBodyDiy from "@/uni_modules/mescroll-uni/components/mescroll-diy/xinlang/mescroll-body.vue";
+	import mixin from '@/common/mixin/mixin.js'
 	
 	export default {
-		mixins: [MescrollMixin], // 使用mixin
+		// 使用mixin
+		mixins: [MescrollMixin, mixin],
 		components:{
 			searchInput,
 			bannerImg,
@@ -73,7 +74,7 @@
 			scrollCourse,
 			swiperCourse,
 			swiperCover,
-			scrollYItem,
+			
 			// 滚动样式组件
 			MescrollBodyDiy
 		},
@@ -81,7 +82,7 @@
 			return {
 				downOption: {
 					beforeEndDelay: 500,
-					offset: 50,
+					offset: 60,
 					inOffsetRate: 0.2
 				},
 				upOption: {
@@ -135,7 +136,7 @@
 				newCourseList: {mainCover:'', records:[] },
 				freeCourseList: {mainCover:'', records:[] },
 				choicestCourseList: { records:[] },
-				
+				// 获取精选课程的数量，默认是10
 				count: 10,
 			}
 		},
@@ -181,8 +182,14 @@
 						msg({title:'页面加载失败！'})
 						this.mescroll.endErr();
 					}			
-				},2000)				
+				},2000)	
+							
 			}
+		},
+		
+		// 监听原生搜索框的点击事件，提前是该输入框的disabled:true
+		onNavigationBarSearchInputClicked() {
+			this.navTo('/pages/search/search')
 		}
 	}
 </script>

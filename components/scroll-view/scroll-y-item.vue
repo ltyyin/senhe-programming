@@ -5,7 +5,7 @@
 			<image class="img" :src="courseInfo.mockImage" mode="heightFix"></image>
 			<view class="play-count">
 				<text class="iconfont icon-bofang"></text>
-				<text>{{courseInfo.studyTotal}}</text>
+				<text>{{courseInfo.studyTotalFloat}}K</text>
 			</view>
 		</view>
 		

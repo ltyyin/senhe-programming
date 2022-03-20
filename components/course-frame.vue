@@ -37,7 +37,6 @@
 			display: flex;
 			height: 80rpx;
 			align-items: center;
-			// background-color: skyblue;
 			
 			.left-text {
 				margin-right: auto;

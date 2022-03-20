@@ -3,37 +3,59 @@
 		{
 			"path": "pages/index/index",
 			"style": {
+				// #ifdef MP
 				"navigationStyle":"custom",
+				// #endif
 				"navigationBarTitleText": "森和编程",
-				"enablePullDownRefresh": false
+				"app-plus": {
+					"titleNView": {
+						"searchInput": {
+							"align":"left",
+							"backgroundColor":"#e8e8e8",
+							"borderRadius": "10rpx",
+							"placeholder": "探索知识的海洋",
+							"placeholderColor": "#999999",
+							"disabled": true	
+						}
+					}
+				}
 			}
 		}, 
 		{
 			"path": "pages/category/category",
 			"style": {
 				"navigationBarTitleText": "分类",
-				"enablePullDownRefresh": false
+				"app-plus": {
+					"bounce":"none",
+					"titleNView": {
+						"backgroundColor": "#FFF",
+						"titleText":"分类",
+						"buttons": [
+							{
+								"fontSrc":"/static/iconfont/iconfont.ttf",
+								"text": "\ue741"
+							}
+						]
+					}
+				}
 			}
 		},
 		{
 			"path": "pages/read/read",
 			"style": {
-				"navigationBarTitleText": "阅读",
-				"enablePullDownRefresh": false
+				"navigationBarTitleText": "阅读"	
 			}
 		},
 		{
 			"path": "pages/question/question",
 			"style": {
-				"navigationBarTitleText": "问答",
-				"enablePullDownRefresh": false
+				"navigationBarTitleText": "问答"
 			}
 		},
 		{
 			"path": "pages/my/my",
 			"style": {
-				"navigationBarTitleText": "我的",
-				"enablePullDownRefresh": false
+				"navigationBarTitleText": "我的"
 				// #ifdef APP-PLUS
 				,"app-plus": {
 					"titleNView": {
@@ -52,17 +74,45 @@
 			"path": "pages/public/web-view",
 			"style": {
 				"navigationBarTitleText": "web-view",
-				"enablePullDownRefresh": false,
 				"app-plus": {
 					"bounce":"none"
 				}
 			}
+		},
+		{
+			"path" : "pages/search/search",
+			"style": {
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"navigationBarTitleText":"搜索查询",
+				"app-plus": {
+					"bounce":"none",
+					"titleNView": {
+						"autoBackButton": false,
+						"searchInput": {
+							"align":"left",
+							"backgroundColor":"#f3f3f3",
+							"borderRadius": "10rpx",
+							"placeholder": "搜索你想要搜索的内容",
+							"placeholderColor": "#999999",
+							"autoFocus": false
+						},
+						"buttons": [
+							{
+								"float":"right",
+								"text": "取消",
+								"fontSize":"16"
+							}
+						]
+					}
+				}
+				
+			}					
 		}
-	],
+  ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarBackgroundColor": "#FFF",
 		"backgroundColor": "#F8F8F8",
 		"backgroundColorTop":"#FFF"
 	},
