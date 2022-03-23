@@ -129,7 +129,7 @@
 			height: [String, Number],
 			bottombar:{
 				type: Boolean,
-				default: true
+				default: false
 			},
 			disableScroll: Boolean
 		},

@@ -17,7 +17,7 @@
 	}
 	
 	.uni-page-head {
-		border-bottom: 1rpx solid #f3f3f3;
+		/* border-bottom: 1rpx solid #f3f3f3; */
 	}
 	
 	.uni-page-head-search {

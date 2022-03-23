@@ -8,7 +8,9 @@
 				// #endif
 				"navigationBarTitleText": "森和编程",
 				"app-plus": {
+					"bounce":"none",
 					"titleNView": {
+						"backgroundColor": "#FFF",
 						"searchInput": {
 							"align":"left",
 							"backgroundColor":"#e8e8e8",
@@ -107,6 +109,34 @@
 				}
 				
 			}					
+		},
+		{
+			"path": "pages/course/show-list",
+			"style": {
+				"app-plus": {
+					"bounce":"none"
+				}
+			}
+		},
+		{
+			"path": "pages/course/details",
+			"style": {
+				"navigationBarTitleText":"课程详情",
+				"app-plus": {
+					"bounce":"none",
+					"titleNView": {
+						"type":"transparent",
+						"backButton": {
+							"background":"rgba(255,255,255,0)"
+						},
+						"buttons": [
+							{
+								"type":"share"								
+							}
+						]
+					}
+				}
+			}
 		}
   ],
 	"globalStyle": {

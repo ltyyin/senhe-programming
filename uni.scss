@@ -20,3 +20,31 @@ $icon-color: #bfbfbf;
 // cdcdcd
 $tag-color: #efefef;
 $tag-background-color: rgba(43, 43, 43, 0.5);
+$page-background-color: #f5f5f5;
+
+@mixin text-ellipsis($clamp: 1){
+	text-overflow:ellipsis;
+	overflow:hidden;
+	display:-webkit-box;
+	-webkit-box-orient:vertical;
+	-webkit-line-clamp: $clamp;
+}
+
+@mixin text-overflow {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+@mixin flex-layout($direction: row, $justifyContent: none, $alignItem: none){
+	/* #ifndef APP-NVUE */
+	display: flex;
+	/* #endif */
+	flex-direction: $direction;
+	@if $justifyContent  != none {
+		justify-content: $justifyContent;
+	}
+	@if $alignItem != none {
+		align-items: $alignItem;
+	}
+}

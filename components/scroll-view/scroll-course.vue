@@ -1,19 +1,16 @@
 <template>
 	<!-- onScorll -->
-	<view class="scroll-course-container">		
-		<scroll-view class="scroll-view onScorll" :scroll-x="scrollX" :scroll-y="scrollY">
-			
-			<template v-if="scrollY">
-				<scroll-y-item v-for="(item,index) of courseList" :key="index" :course-info="item"></scroll-y-item>				
-			</template>
-			
-			<template v-else>
+	<view class="scroll-course-container">
+		<template v-if="scrollY">
+			<scroll-y-item v-for="(item,index) of courseList" :key="index" :course-info="item"></scroll-y-item>				
+		</template>
+		<template v-else>
+			<scroll-view class="scroll-view onScorll" :scroll-x="scrollX" :scroll-y="scrollY">
 				<view class="scroll-item-wrapper" :style="{width:`${courseList.length * 280}rpx`}">
 					<scroll-x-item v-for="item of courseList" :key="item.id" :course-info="item"></scroll-x-item> 
 				</view>	
-			</template>
-			
-		</scroll-view>
+			</scroll-view>		
+		</template>	
 	</view>
 </template>
 
@@ -45,22 +42,6 @@
 </script>
 
 <style lang="scss">
-	/* #ifdef MP-MP-WEIXIN || APP-PLUS */
-	.onScorll ::-webkit-scrollbar {
-		display: none;
-	}
-	/* #endif */
-	
-	/* 解决 H5 滚动条 */
-	/* #ifdef H5 */
-	.onScorll ::-webkit-scrollbar{
-		width: 0 !important;
-		height: 0 !important;
-		display: none;
-	}
-	/* #endif */
-	
-	
 	.scroll-course-container{
 		.scroll-view {
 			white-space: nowrap;

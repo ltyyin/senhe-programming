@@ -1,7 +1,12 @@
 <template>
 	<view class="nav-list-container">
 		<view class="row" v-for="(row,rowIn) of rows" :key="rowIn">
-			<view class="icon-item" v-for="(item,indIn) of navList.slice(rowIn * ind,(rowIn + 1) * ind)" :key="indIn">
+			<view 
+				class="icon-item" 
+				v-for="(item,indIn) of navList.slice(rowIn * ind,(rowIn + 1) * ind)" 
+				:key="indIn" 
+				@click="navTo(`/pages/course/show-list?params=${encodeURIComponent(JSON.stringify({id:item.id,title:item.category.title}))}`)"
+				>
 				<view class="image-wrap">
 					<image class="image" :src="item.category.imageUrl" mode="aspectFit"></image>
 				</view>
@@ -13,8 +18,10 @@
 
 <script>
 	import navList from '@/common/localData/nav-list.js'
+	import mixin from '@/common/mixin/mixin.js'
 	export default {
 		name:'nav-list',
+		mixins: [mixin],
 		props:{
 			navList:{
 				type:Array,

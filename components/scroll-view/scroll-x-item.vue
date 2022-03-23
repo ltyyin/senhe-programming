@@ -88,11 +88,7 @@
 				margin-top: 10rpx;
 				font-size: 26rpx;
 				font-weight: 600;		
-				text-overflow:ellipsis;
-				overflow:hidden;
-				display:-webkit-box;
-				-webkit-box-orient:vertical;
-				-webkit-line-clamp:2;
+				@include text-ellipsis(2);
 			}
 			
 			.info {

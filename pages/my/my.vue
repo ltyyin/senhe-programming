@@ -18,12 +18,10 @@
 			if(event.index === 0) {
 				uni.scanCode({
 					success:(res) => {
-						uni.navigateTo({
-							url: `/pages/public/web-view?url=${res.result}`
-						})
+						msg({title: '请求成功！'})
 					},
 					fail:() => {
-						msg({title:'扫码失败！'})
+						msg({title: '扫码失败！'})
 					}
 				})
 			}
@@ -32,7 +30,7 @@
 			async	sendNet() {
 				try{
 					const result = await request()
-					msg({title: '请求成功!',icon: 'error'})
+					msg({title: '请求成功!'})
 					console.log(result)
 				}catch(e){
 					console.log(e)

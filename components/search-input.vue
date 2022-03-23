@@ -1,14 +1,14 @@
-<template>	
-	<uni-nav-bar  fixed :height="`${statusBarHeight + 82}rpx`">
-			<view class="search-frame" @click="navTo('/pages/search/search')" slot="left" :style="{marginTop:`${statusBarHeight}rpx`}">
-				<text class="iconfont icon-search"></text>
-				<text class="line"></text>
-				<text>搜索</text>
-			</view>
-			
-			<view class="title" :style="{marginTop:`${statusBarHeight}rpx`}">
-				森和编程
-			</view>
+<template>
+	<uni-nav-bar fixed class="nav-bar" height="82rpx">
+		<view class="search-frame" @click="navTo('/pages/search/search')" slot="left" style="margin-top:25px;">
+			<text class="iconfont icon-search"></text>
+			<text class="line"></text>
+			<text>搜索</text>
+		</view>
+		
+		<view class="title" style="margin-top:25px;">
+			森和编程
+		</view>
 	</uni-nav-bar>
 </template>
 

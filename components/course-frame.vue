@@ -4,7 +4,7 @@
 			<view class="left-text">
 				{{titleName}}
 			</view>
-			<view class="right-text">
+			<view class="right-text" @click="navTo(`/pages/course/show-list?params=${encodeURIComponent(JSON.stringify({id:null,title:titleName}))}`)">
 				<text>更多</text>
 				<text class="iconfont icon-arrow-right"></text>
 			</view>	
@@ -16,8 +16,10 @@
 </template>
 
 <script>
+	import mixin from '@/common/mixin/mixin.js'
 	export default {
 		name:'course-frame',
+		mixins: [mixin],
 		props:{
 			titleName:{
 				type:String,

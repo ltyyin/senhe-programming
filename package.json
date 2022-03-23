@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "dayjs": "^1.11.0"
+  },
+  "name": "senhe",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "tyyin <lantaiying@gmail.com>",
+  "license": "MIT"
+}

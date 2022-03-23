@@ -62,9 +62,7 @@
 				transform: scale(0.8);
 				width: 100rpx;
 				text-align: center;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
+				@include  text-ellipsis;
 				
 				.iconfont {
 					font-size: 16rpx;
@@ -79,20 +77,14 @@
 			.title {
 				font-weight: 600;
 				margin-bottom: 10rpx;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-				overflow: hidden;
 				font-size: 30rpx;
+				@include text-ellipsis;
 			}
 			
 			.description {
 				color: #a2a2a2;
 				font-size: 24rpx;
-				text-overflow:ellipsis;
-				overflow:hidden;
-				display:-webkit-box;
-				-webkit-box-orient:vertical;
-				-webkit-line-clamp:2;
+				@include text-ellipsis(2);
 			}
 		}
 	}

@@ -17,8 +17,13 @@
 	
 			<view class="info">
 				<text class="price">
-					<text class="current">￥{{courseInfo.priceDiscount}}</text>
-					<text class="original">{{courseInfo.priceOriginal}}</text>
+					<template v-if="courseInfo.isFree">
+						<text class="current">免费</text>
+					</template>
+					<template v-else>
+						<text class="current">￥{{courseInfo.priceDiscount}}</text>
+						<text class="original">{{courseInfo.priceOriginal}}</text>
+					</template>					
 				</text>
 				
 				<text class="author">
@@ -102,11 +107,7 @@
 			.title {
 				font-weight: 600;
 				font-size: 30rpx;				
-				text-overflow:ellipsis;
-				overflow:hidden;
-				display:-webkit-box;
-				-webkit-box-orient:vertical;
-				-webkit-line-clamp:2;
+				@include text-ellipsis(2)
 			}
 			
 			
@@ -133,7 +134,7 @@
 						color: #afafaf;
 						position: absolute;
 						top: 10rpx;
-						left: 90rpx;
+						left: 135rpx;
 					}
 				}
 				
@@ -141,10 +142,10 @@
 					@include hiddenWord;
 					font-size: 25rpx;
 					color: #b6b6b6;
-					width: 200rpx;					
+					width: 160rpx;					
 					position: absolute;
 					top: 8rpx;
-					right: 10rpx;
+					right: 0rpx;
 				}				
 			}		
 		}		

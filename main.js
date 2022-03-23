@@ -1,5 +1,8 @@
 import App from './App'
 
+// dayjs 时间处理
+import './common/utils/dayjs.js'
+
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false

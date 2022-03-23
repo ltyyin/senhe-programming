@@ -1,8 +1,8 @@
 <template>
-	<view class="home-container">
+	<view class="home-container" :style="{paddingTop: `${navBarHeight}rpx`}">
 		<!-- 小程序自定义的搜索栏 -->
-		<!-- #ifdef MP -->
-		<search-input></search-input>
+		<!-- #ifdef MP --> 
+		<search-input @navBarHeight="navBarHeight = $event"></search-input>
 		<!-- #endif -->
 			
 		<!-- 自定义的刷新样式 -->
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-	import searchInput from '@/components/search-input.vue'
+	import searchInput from '@/components/search-input-one.vue'
 	import bannerImg from '@/components/banner-img.vue'
 	import news from './components/news.vue'
 	import navList from './components/nav-list.vue'
@@ -80,10 +80,15 @@
 		},
 		data(){
 			return {
+				navBarHeight: 0,
 				downOption: {
-					beforeEndDelay: 500,
+					// beforeEndDelay: 500,
 					offset: 60,
-					inOffsetRate: 0.2
+					inOffsetRate: 0.2,
+					textInOffset: '',
+					textLoading: '',
+					textSuccess: '',
+					textOutOffset: ''
 				},
 				upOption: {
 					toTop: {
@@ -152,38 +157,33 @@
 				}
 			},
 			
-			upCallback(page) {
+			async upCallback(page) {
 				if(page.num === 1){
 					this.requestList.forEach((req,index) => {
 						this.requestListMethod(req.method, req.obj, req.options)
 					})
-				}
+				}			
+				// 获取精选课程
+				let res = await apiCourse.getChoicest({
+					count:this.count
+				})
 				
-				/* 因为本机连接查询比较快，使用延迟定时器来模拟慢速加载 */
-				setTimeout(async ()=>{
-					// 获取精选课程
-					let res = await apiCourse.getChoicest({
-						count:this.count
-					})
-					
-					if(res.statusCode ===200){
-						if(page.num === 1){
-							this.choicestCourseList = res.data
-						}else {
-							this.choicestCourseList.records.push(...res.data.records)
-						}	
-						
-						/* 判断下次传递的count值 */
-						let difference = this.choicestCourseList.total - this.choicestCourseList.records.length						
-						this.count = 	difference > 10 ? 10 : difference
-						
-						this.mescroll.endBySize(res.data.records.length, this.choicestCourseList.total);
+				if(res.statusCode ===200){
+					if(page.num === 1){
+						this.choicestCourseList = res.data
 					}else {
-						msg({title:'页面加载失败！'})
-						this.mescroll.endErr();
-					}			
-				},2000)	
-							
+						this.choicestCourseList.records.push(...res.data.records)
+					}	
+					
+					/* 判断下次传递的count值 */
+					let difference = this.choicestCourseList.total - this.choicestCourseList.records.length						
+					this.count = 	difference > 10 ? 10 : difference
+					
+					this.mescroll.endBySize(res.data.records.length, this.choicestCourseList.total);
+				}else {
+					msg({title:'页面加载失败！'})
+					this.mescroll.endErr();
+				}		
 			}
 		},
 		
@@ -196,6 +196,6 @@
 
 <style lang="scss">
 	.home-container {
-		background-color: #f5f5f5;
+		background-color: $page-background-color;
 	}
 </style>
