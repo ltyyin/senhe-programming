@@ -1,6 +1,5 @@
 <template>
-	<view class="course-list-container">
-		<down-bar :down-bars="downBars" @search="search"></down-bar>		
+	<view class="course-list-container">		
 		<mescroll-uni 
 			:ref="'mescrollRef'+i" 
 			@init="mescrollInit" 
@@ -11,7 +10,8 @@
 			:bottombar="false"
 			:top="top"
 			>
-			<view class="touch">	
+			<view class="touch">
+				<down-bar :down-bars="downBars" @search="search"></down-bar>		
 				<template v-for="(item,index) of courseList">
 					<scroll-y-item  :key="item.id" :course-info="item"></scroll-y-item>
 				</template>
@@ -55,12 +55,12 @@
 		data() {
 			return {
 				// #ifdef MP || APP-PLUS
-				top: 80,
-				// #endif
-				// #ifdef H5
 				top: 0,
 				// #endif
-				downBars: localData.courseDownBars,
+				// #ifdef H5
+				top: '-44px',
+				// #endif
+				downBars: localData.courseDownBars, 
 				downOption:{
 					offset: 50
 				},
@@ -99,9 +99,9 @@
 				if(options){
 					for(let [k,v] of Object.entries(options)) {
 						this.queryCondition[k] = v
-					}					
+					}
+					this.mescroll.resetUpScroll()
 				}
-				this.mescroll.resetUpScroll()
 			},
 			
 			downCallback() {
@@ -137,7 +137,6 @@
 <style lang="scss">
 	.course-list-container {
 		background-color: #F1F1F1;
-		
 		.touch {
 			overflow: hidden;
 			/* #ifdef H5 */

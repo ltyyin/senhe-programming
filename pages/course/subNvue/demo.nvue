@@ -1,0 +1,45 @@
+<template>
+	<div class="slider-wrapper">
+		<view class="slider-left"></view>
+		<view class="slider-right"></view>
+		<view class="slider-dot"></view>
+	</div>
+</template>
+
+<script>
+	export default {
+		
+	}
+</script>
+
+<style lang="scss">
+	.slider-wrapper {
+		// @include flex-layout($justifyContent: center, $alignItem: center);
+		flex-direction: row;
+		justify-content: flex-start;
+		// width: 200rpx;
+		height: 100rpx;
+		.slider-left {
+			width: 100rpx;
+			height: 4rpx;
+			background-color: #1eddb2;
+		}
+		.slider-right {
+			width: 100rpx;
+			height: 4rpx;
+			background-color: #D8D8D8;
+		}
+		
+		.slider-dot {
+			width: 20rpx;
+			height: 20rpx;
+			background-color: red;
+			border-radius: 20rpx;
+			position: absolute;
+			// position: relative;
+			left: 0;
+			top: 50rpx;
+			transform: translateY(-50%);
+		}
+	}
+</style>

@@ -1,29 +1,36 @@
 <template>
 	<view class="detail-head-container">
-		<image src="https://7n.w3cschool.cn/attachments/image/201910/big_99988_1378947.jpg?t=1571301165" mode="aspectFill"></image>
+		<image class="img" :src="detailInfo.mainImage" mode="aspectFill"></image>
 		<view class="shelter-from">
 			<view class="shelter-from-info">
-				<view class="title">Dubbo快速入门视频课程</view>
-				<uni-rate class="score-star" readonly allow-half :value="currentScore" size="28rpx" />
-				<text class="score">{{currentScore}}</text>
-				<view class="course-info">
-					<text class="play">
-						<text class="iconfont icon-24gf-playCircle"></text>
-						<text>视频课程</text>
-					</text>
-					<text>15节</text>
-					<text class="iconfont icon-dian"></text>
-					<text>15个小点</text>
-					<text class="iconfont icon-dian"></text>
-					<text>69人参与</text>
-				</view>
+				<slot>
+					<view class="title">{{detailInfo.title}}</view>
+					<uni-rate class="score-star" readonly allow-half :value="detailInfo.goodRate" size="28rpx" />
+					<text class="score">{{detailInfo.goodRate}}</text>
+					<view class="course-info">
+						<text class="play">
+							<text class="iconfont icon-24gf-playCircle"></text>
+							<text>视频课程</text>
+						</text>
+						<text>{{detailInfo.sectionCount}}节</text>
+						<text class="iconfont icon-dian"></text>
+						<text>{{detailInfo.dot}}个小点</text>
+						<text class="iconfont icon-dian"></text>
+						<text>{{detailInfo.studyTotal}}人参与</text>
+					</view>
+				</slot>
 			</view>
 		</view>	
 		
 		<view class="price-area">
 			<view class="price">
-				<text class="discount">￥599.98</text>
-				<text class="original">￥959.98</text>
+				<template v-if="detailInfo.isFree">
+					<text class="discount">免费</text>
+				</template>
+				<template v-else>
+					<text class="discount">￥{{detailInfo.priceDiscount}}</text>
+					<text class="original">￥{{detailInfo.priceOriginal}}</text>
+				</template>
 			</view>
 			<view class="service">
 				<text class="one">
@@ -39,22 +46,24 @@
 
 <script>
 	export default {
+		props: {
+			detailInfo: {
+				type: Object,				
+			}
+		},
 		data() {
 			return {
 				height: 0,
-				currentScore: 4.3
 			}
-		},
-		created() {
-			console.log(uni.getSystemInfoSync())
 		}
 	}
 </script>
 
 <style lang="scss">
 	.detail-head-container {
+		background-color: $page-background-color;
 		$height: 330rpx;
-		image {
+		.img {
 			width: 100%;
 			height: $height;
 			vertical-align: top;
@@ -73,6 +82,7 @@
 				color: #FFF;
 				.title {
 					font-weight: 600;
+					
 				}
 				.score-star {
 					margin: 20rpx 0;

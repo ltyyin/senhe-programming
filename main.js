@@ -1,5 +1,11 @@
 import App from './App'
 
+// UI组件库
+import uView from '@/uni_modules/uview-ui'
+Vue.use(uView)
+// 如此配置即可
+uni.$u.config.unit = 'rpx'
+
 // dayjs 时间处理
 import './common/utils/dayjs.js'
 

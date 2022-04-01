@@ -121,9 +121,11 @@
 		{
 			"path": "pages/course/details",
 			"style": {
-				"navigationBarTitleText":"课程详情",
+				// "navigationBarTitleText":"课程详情",
+				"onReachBottomDistance": 5,
 				"app-plus": {
 					"bounce":"none",
+					"scrollIndicator":"none",
 					"titleNView": {
 						"type":"transparent",
 						"backButton": {
@@ -131,17 +133,56 @@
 						},
 						"buttons": [
 							{
-								"type":"share"								
+								"type":"share",
+								"background": "rgba(0,0,0,0)"
 							}
 						]
 					}
 				}
 			}
+		},
+		{
+			"path" : "pages/recommend-list/recommend-list",
+			"style" :{
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"bounce":"none",
+					"scrollIndicator":"none",
+					"titleNView": {
+						"type":"transparent",
+						"backButton": {
+							"background":"rgba(255,255,255,0)"
+						}
+					}
+				}
+			}			
+		},
+		{
+			"path": "pages/course/course-play",
+			"style": {
+				// #ifdef APP-PLUS
+				"navigationStyle": "custom",
+				// #endif
+				"app-plus": {
+					"bounce":"none",
+					"subNVues": [
+						{
+							"id":"video",
+							"path":"pages/course/subNvue/video",
+							"style": {
+								"position":"dock",
+								"width":"100%",
+								"height":"250px"
+							}
+						}
+					]
+				}
+			}            
 		}
   ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#FFF",
 		"backgroundColor": "#F8F8F8",
 		"backgroundColorTop":"#FFF"

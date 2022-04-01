@@ -131,7 +131,7 @@
 				type: Boolean,
 				default: false
 			},
-			disableScroll: Boolean
+			disableScroll: Boolean,
 		},
 		data() {
 			return {

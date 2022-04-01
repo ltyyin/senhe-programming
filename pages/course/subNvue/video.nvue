@@ -1,0 +1,396 @@
+<template>
+	<view class="video-container" :style="{paddingTop: `${statusBarHeight}px`}">
+		<video 
+			class="video"
+			ref="video"			
+			:src="src"
+			poster="https://atts.w3cschool.cn/attachments/cover/cover_functional_programming.png?t=1634195874"
+			:controls="false"
+			:show-progress="false"
+			:show-fullscreen-btn="false"
+			:show-play-btn="false"
+			:show-center-play-btn="false"
+			:enable-progress-gesture="false"
+			@ended="ended"
+			@timeupdate="timeupdate"
+			:style="{height: `${height}px`}"
+		>
+			<cover-view class="control-top" v-if="showControls" key="title" :style="{width: `${screenWidth}px`}">
+				<text class="iconfont arrow-left" @click="backHandler">&#xe745;</text>
+				<text class="title">{{title}}</text>
+			</cover-view>
+				
+			<cover-view class="play-but-wrapper" @click="playWrapper" key="playWrapper">
+				<view class="play-but" @click.stop="playVideo" v-if="!play">
+					<text class="iconfont play" v-if="!play">&#xe65e;</text>
+					<text class="iconfont play" v-else>&#xe616;</text>
+				</view>
+			</cover-view>
+			
+			<cover-view class="control-column" v-if="showControls" key="control-column" :style="{width: `${screenWidth}px`}">
+				<view class="control-left">
+					<text class="iconfont btn play" v-if="play" @click="playVideo">&#xe616;</text>
+					<text class="iconfont btn play" v-else @click="playVideo">&#xe65e;</text>
+					<text class="iconfont btn" @click="nextSection">&#xe99c;</text>
+				</view>
+				
+				<view class="slider-wrapper"> 
+					<text class="time">{{currentTimeChange}}</text>
+					<slider-bar class="slider-bar" @change="change" :duration="duration || 100" :current="currentTime" :sliderWidth="sliderWidth"></slider-bar>
+					<text class="time">{{durationChange}}</text>
+				</view>
+				
+				<view class="control-right">
+					<view class="speed">
+						<text class="speed-btn" @click="isShowfastForward = !isShowfastForward">{{currentRate}}x</text>					
+					</view>
+					<text class="full-screen iconfont" @click="fullScreenHandler" v-if="!isFullScreen">&#xeb11;</text>
+					<text class="full-screen iconfont" @click="fullScreenHandler" v-else>&#xeb10;</text>
+				</view>
+			</cover-view>
+			
+			<cover-view :class="isFullScreen ? 'fast-forward-y' : 'fast-forward-x'" v-if="isShowfastForward">
+				<text class="rate" :class="{active: rate === currentRate}" v-for="(rate,index) of fastForwardList" :key="idnex" @click="changeRate(rate)">{{rate}}</text>
+			</cover-view>
+		</video>
+	</view>
+</template>
+
+<script>
+	import sliderBar from './slider-bar.nvue'
+	import videoTimeFormat from '@/common/utils/dayjs.js'
+	import demo from './demo.nvue'
+	
+	let videoContext = null
+	// 定时器对象
+	let timer = null 
+	export default {
+		components: {
+			sliderBar,
+			demo
+		},
+		data() {
+			return {
+				statusBarHeight: 0,
+				height: 0,
+				play: false, //播放状态
+				showControls: true, // 控制层显示隐藏				duration: 0,
+				currentTime: 0,
+				isFullScreen: false,
+				screenWidth: 0,
+				screenHeight: 0,
+				// 课程信息
+				poster: 'https://atts.w3cschool.cn/attachments/cover/cover_applied_visual_design_camp.png?t=1583118575',
+				src: '',
+				title: '',
+				fastForwardList: ['2.0','1.5','1.2','1.0','0.5'],
+				currentRate: '1.0',
+				isShowfastForward: false,
+				// 一进来是否播放视频，如果在点击切换视频后则改为自动播放视频
+				readPlay: false
+			}
+		},
+		computed: {
+			durationChange() {
+				return videoTimeFormat(this.duration,'mm:ss')
+			},
+			currentTimeChange() {
+				return videoTimeFormat(this.currentTime,'mm:ss')
+			},
+			sliderWidth() {
+				return this.screenWidth -  uni.upx2px(460) - 35
+			}
+		},
+		beforeCreate() {
+			// nvue文件 引入图标文件的方式
+			let domModule = weex.requireModule('dom');
+			domModule.addRule('fontFace', {
+				fontFamily: 'iconfont',
+				src: "url('https://at.alicdn.com/t/font_3247714_x8gokiqjqg.ttf?t=1648370590430')"
+			});
+		},
+		
+		onLoad() {
+			let systemInfo = uni.getSystemInfoSync()
+			this.statusBarHeight = systemInfo.statusBarHeight
+			// 原生子窗口设置的固定高度 250px
+			this.height = 250 - this.statusBarHeight
+			console.log(this.height)
+			const subNVue = uni.getSubNVueById('video');
+			// 设置屏幕的宽度
+			this.screenWidth =  systemInfo.screenWidth
+			// 设置屏幕的高度
+			this.screenHeight = systemInfo.screenHeight
+			
+			uni.$on('videoNvue',(currentCourse)=> {
+				videoContext.pause()
+				this.poster = 'https://atts.w3cschool.cn/attachments/cover/cover_applied_visual_design_camp.png?t=1583118575'
+				this.src = currentCourse.videoUrl
+				this.title = currentCourse.courseName
+				if(this.readPlay){
+					setTimeout(()=> {
+						videoContext.play()
+						this.play = true
+						this.showHideControls()
+					},500)
+					return
+				}
+				this.readPlay = true
+			})
+		},
+		
+		onReady() {
+			// videoContext = uni.createVideoContext("video1", this);
+			videoContext = this.$refs.video
+		},
+		
+		onUnload() {
+			uni.$off('videoNvue')
+		},
+		
+		watch: {
+			isFullScreen(newVal,oldVal) {
+				let width = this.screenWidth
+				this.screenWidth = this.screenHeight
+				this.screenHeight = width
+			}
+		},
+		
+		methods: {
+			ended() {
+				
+			},
+			timeupdate(e) {
+				// console.log(e.detail);
+				this.duration = e.detail.duration
+				this.currentTime = e.detail.currentTime
+			},
+			playWrapper() {
+				this.showHideControls()
+			},
+			playVideo() {
+				if(!this.play) {					
+					this.play = true
+					videoContext.play()
+					this.showHideControls()
+				}else {
+					this.play = false
+					videoContext.pause()
+					this.showHideControls()
+				}
+			},
+			// 显示或隐藏控制层
+			showHideControls() {
+				this.showControls = !this.showControls			
+				if(this.isShowfastForward) this.isShowfastForward = false
+				// 定时隐藏控制层
+				if(this.showControls) {
+					timer && clearTimeout(timer)
+					timer = setTimeout(()=>{
+						this.showControls = false
+						if(this.isShowfastForward) this.isShowfastForward = false
+					}, 5000) // 3秒隐藏
+				}
+			},
+			// 切换或退出全屏
+			fullScreenHandler() {
+				if(!this.isFullScreen){
+					videoContext.requestFullScreen()
+				}else {
+					videoContext.exitFullScreen()
+				}
+				this.isFullScreen = !this.isFullScreen
+				if(this.isShowfastForward) this.isShowfastForward = false
+			},
+			
+			// 退出全屏或返回上一个页面
+			backHandler() {
+				if(this.isFullScreen) {
+					this.fullScreenHandler()
+				}else {
+					uni.navigateBack()
+				}
+			},
+			// 监听视频进度条的改变
+			change(currentSecond) {
+				this.currentTime = currentSecond				
+				if(!this.play){
+					this.play = true
+					// videoContext.setStyles({
+					// 	'initial-time': currentSecond
+					// })
+					videoContext.play()
+				}
+				videoContext.seek(currentSecond)
+			},
+			// 切换播放速度
+			changeRate(rate) {
+				if(this.currentRate !== rate){
+					this.currentRate = rate
+					videoContext.playbackRate(rate)
+					this.isShowfastForward = false
+				}
+			},
+			// 下一章节
+			nextSection() {
+				uni.$emit('nextSection')
+			}
+		}
+	}
+</script>
+
+<style lang="scss">	
+	.iconfont {
+	  font-family: iconfont !important;
+	  font-style: normal;
+		color: #FFFFFF;
+		font-size: 32rpx;
+	}
+	
+	.uni-slider-handle {
+		left: 10px;
+	}
+	
+	.video-container {
+		position: relative;
+		.video {
+			position: relative;
+			transition-duration: 2s;
+			
+			// 顶部标题栏的样式
+			.control-top {
+				position: absolute;
+				top: 0;
+				width: 750rpx;
+				padding: 0 20rpx;
+				@include flex-layout($alignItem: center);
+				height: 80rpx;
+				background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)  70px);
+				.arrow-left {
+					font-size: 60rpx;
+					margin-right: 5rpx;
+					width: 70rpx;
+				}
+				.title {
+					font-size: 34rpx;
+					color: #FFFFFF;
+					lines: 1;
+					text-overflow: ellipsis;
+				}
+			}
+			
+			// 中间播放按钮的样式
+			.play-but-wrapper {
+				@include flex-layout($justifyContent: center, $alignItem: center);
+				background-color: transparent;
+				position: absolute;
+				top: 80rpx;
+				bottom: 80rpx;
+				left: 0;
+				right: 0;
+				.play-but {
+					width: 130rpx;
+					height: 100rpx;
+					background-color: rgba(0,0,0,.5);
+					border-radius: 10rpx;
+					@include flex-layout($justifyContent: center, $alignItem: center);
+					.play {
+						font-size: 80rpx;
+					}
+				}
+			}
+			
+			// 底部状态栏的样式 
+			.control-column {
+				$height: 80rpx;
+				background-image: linear-gradient(to top,rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)  70px);
+				// width: 750rpx;
+				height: $height;
+				position: absolute;
+				bottom: 0;
+				@include flex-layout($justifyContent: space-between, $alignItem: center);
+				
+				.iconfont {
+					font-size: 50rpx;
+					width: 70rpx;
+					line-height: $height;
+					text-align: center;
+					// margin-left: 10rpx;
+					// background-color: hotpink;
+				}
+				
+				.play {
+					font-size: 44rpx;
+				}
+				
+				.control-left {
+					@include flex-layout($justifyContent: space-between, $alignItem: center);
+				}
+				
+				.slider-wrapper {
+					flex: 1;
+					@extend .control-left;
+					.time {
+						// background-color: hotpink;
+						width: 80rpx;
+						font-size: 26rpx;
+						color: #FFFFFF;
+					}
+					.slider-bar {
+						// flex: 1;
+						padding: 0 20rpx;
+					}
+				}
+				
+				.control-right {
+					@extend .control-left;
+					.speed-btn {
+						font-size: 30rpx;
+						width: 90rpx;
+						text-align: center;
+						color: #FFFFFF;
+					}
+				}
+			}	
+		
+			@mixin fast-forward {
+				background-color: rgba(0,0,0,0.7);
+				position: absolute;
+				border-radius: 10rpx;
+				.rate {
+					text-align: center;
+					color: #FFFFFF;
+				}
+				.active {
+					color: $senhe-theme-color;
+				}
+			}
+		
+			// 播放速度样式
+			.fast-forward-x {
+				@include fast-forward;
+				right: 60rpx;
+				width: 100rpx;
+				bottom: 90rpx;
+				.rate {
+					font-size: 35rpx;
+					line-height: 50rpx;
+				}
+			}
+			
+			// 播放速度样式
+			.fast-forward-y {
+				@include fast-forward;
+				width: 300rpx;
+				right: 0rpx;
+				top: 0;
+				bottom: 90rpx;
+				justify-content: space-around;
+				.rate {
+					font-size: 35rpx;
+					line-height: 120rpx;
+				}
+			}
+		}
+	}
+</style>

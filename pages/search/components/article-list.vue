@@ -1,6 +1,5 @@
 <template>
 	<view class="article-list-container">
-		<down-bar :down-bars="downBars" @search="search"></down-bar>
 		<mescroll-uni 
 			:ref="'mescrollRef'+i" 
 			@init="mescrollInit" 
@@ -13,6 +12,7 @@
 			:top="top"
 		>
 			<view class="article-scroll-wrapper">
+				<down-bar :down-bars="downBars" @search="search"></down-bar>
 				<template v-for="(article,index) of articleList">
 					<article-item :articleInfo="article" :key="article.id"></article-item>
 				</template>
@@ -55,10 +55,10 @@
 		data() {
 			return {
 				// #ifdef MP || APP-PLUS
-				top: 80,
+				top: 0,
 				// #endif
 				// #ifdef H5
-				top: 0,
+				top: '-44px',
 				// #endif
 				downBars: localData.articleDownBars,
 				downOption:{
@@ -99,9 +99,9 @@
 				if(options){
 					for(let [k,v] of Object.entries(options)) {
 						this.queryCondition[k] = v
-					}					
+					}
+					this.mescroll.resetUpScroll()
 				}
-				this.mescroll.resetUpScroll()
 			},
 			
 			downCallback() {

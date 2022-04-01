@@ -4,7 +4,7 @@
 		<!-- 替换组件的清除图标 -->
 		<uni-search-bar :value='content' :focus="isFocus" placeholder="搜索你想要搜索的内容" @confirm="doSearch" @cancel="navBack()" cancelButton="always"></uni-search-bar>
 		<!-- #endif -->	
-				
+			
 		<template v-if="isShowKeyWords">
 			<!-- #ifdef APP-PLUS || H5 -->
 			<view class="space-bar" v-if="isShowKeyWords" style="height: 15rpx;background-color: #f5f5f5;"></view>
@@ -17,7 +17,7 @@
 			<me-tabs v-model="tabIndex" :height="70" :tabs="tabs"></me-tabs>
 			<swiper :style="{height: height}" :current="tabIndex" @change="swiperChange">
 				<swiper-item>			
-					<course-list ref="mescrollItem0" :i="0" :index="tabIndex" :content="content" :height="height"></course-list>
+					<course-list ref="mescrollItem0" :is-use="isUse" :i="0" :index="tabIndex" :content="content" :height="height"></course-list>
 				</swiper-item>
 				<swiper-item>
 					<article-list ref="mescrollItem1" :i="1" :index="tabIndex" :content="content"></article-list>
@@ -38,7 +38,7 @@
 	import articleList from './components/article-list.vue'
 	import questionList from './components/question-list.vue'
 	
-	let currentWebView = null	
+	let currentWebview = null	
 	const key = 'search_history_list'
 	export default {
 		name: 'searchIndex',
@@ -63,9 +63,10 @@
 				tabIndex: 0 ,// 当前tab的下标
 				tabs: [{name:'课程'}, {name:'文章'}, {name:'问答'}],
 				height: 200, // 需要固定swiper的高度
+				isUse: true
 			}
 		},
-		onLoad(option) {					
+		onLoad(option) {		
 			// #ifndef MP
 			// 需要固定swiper的高度 (需减去悬浮tabs的高度64rpx)
 			this.height = uni.getSystemInfoSync().windowHeight - uni.upx2px(70) + 'px'
@@ -81,19 +82,21 @@
 			// #endif
 			
 			// #ifdef APP-PLUS
-			currentWebView = this.$scope.$getAppWebview()
+			// currentWebView = this.$scope.$getAppWebview()
+				currentWebview = this.$mp.page.$getAppWebview()
 			// #endif
 			
 			if(option.params) {
 				this.params = JSON.parse(decodeURIComponent(option.params))
+				this.content = this.params.title
 				// #ifdef APP-PLUS
-				currentWebView.setTitleNViewSearchInputText(this.content)
+				currentWebview.setTitleNViewSearchInputText(this.content)
 				// #endif
 				this.doSearch({value:this.params.title})
 			}else { 
 				// #ifdef APP-PLUS
 				// 自动获取焦点	
-				currentWebView.setTitleNViewSearchInputFocus(true)				
+				currentWebview.setTitleNViewSearchInputFocus(true)				
 				// #endif
 			}
 		},
@@ -106,6 +109,18 @@
 		// 监听原生输入框的内容变化
 		onNavigationBarSearchInputChanged(e) {
 			// console.log(e)
+		},
+		
+		onPageScroll(e) {
+			if(e.scrollTop === 0){
+				this.isUse = true
+				console.log(this.isUse)
+			}else {
+				if(this.isUse){
+					this.isUse = false
+					console.log(this.isUse)
+				}
+			}
 		},
 		
 		// 监听键盘搜索按钮的点击
@@ -126,6 +141,7 @@
 			// 轮播菜单
 			swiperChange(e){
 				this.tabIndex = e.detail.current
+				
 			},
 			
 			historyStorage(val) {

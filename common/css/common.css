@@ -18,7 +18,7 @@
 }
 
 /* 隐藏滚动条的问题，但依然具备可以滚动的功能 */
-/* #ifdef MP || APP-PLUS */
+/* #ifdef MP || APP-VUE */
 .onScorll ::-webkit-scrollbar {
 	display: none;
 }

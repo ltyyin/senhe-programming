@@ -29,15 +29,11 @@
 </template>
 
 <script>
-	import searchInput from '@/components/search-input.vue'
 	import apiCategory from '@/api/category.js'
 	import mixin from '@/common/mixin/mixin.js'
 		
 	export default {
 		mixins: [mixin],
-		components: {
-			searchInput,
-		},
 		data() {
 			return {
 				height: 0,

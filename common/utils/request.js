@@ -1,6 +1,6 @@
 const BASIS_URL = 'http://192.168.1.12:5000'
-// const BASIS_URL = 'http://192.168.0.100:5000'
-// const BASIS_URL = 'http://4871o44a00.wicp.vip'
+// const BASIS_URL = 'http://192.168.0.102:5000'
+// const BASIS_URL = 'http://50874734dw.qicp.vip'
 
 const request = function(options = {}) {
 	return	new Promise((resolve,reject)=>{
