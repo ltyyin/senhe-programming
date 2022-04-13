@@ -1,5 +1,5 @@
 <template>
-	<view class="scroll-course-item">
+	<view class="scroll-course-item" @click="navTo">
 		
 		<view class="image-wrapper">
 			<image class="image" :src="courseInfo.info.cover" mode="widthFix"></image>
@@ -35,6 +35,13 @@
 			courseInfo: {
 				type: Object,
 				required: true
+			}
+		},
+		methods: {
+			navTo() {
+				uni.navigateTo({
+					url: `/pages/course/details?id=${this.courseInfo.id}`
+				})
 			}
 		}
 	}

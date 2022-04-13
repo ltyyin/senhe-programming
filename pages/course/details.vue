@@ -23,10 +23,18 @@
 		</view>
 		
 		<!-- 购物tabBar -->
+		<view class="safe-bottom"></view>
 		<uni-goods-nav class="goods-nav" :fill="true"  :options="options" :button-group="buttonGroup"  @click="onClick" @buttonClick="buttonClick" />
 		
+		<!-- #ifndef MP -->
 		<!-- 分享层 -->
-		<share :isShowShare.sync="isShowShare"></share>
+		<share v-if="detailInfo.id" :isShowShare.sync="isShowShare" :detail-info="detailInfo"></share>
+		<!-- #endif -->
+		
+		<!-- 评论编写按钮 -->
+		<view class="write-commont-btn" v-if="tabIndex === 2" @click="navToEvaluate">
+			<text class="iconfont icon-creation"></text>
+		</view>
 	</view>
 </template>
 
@@ -40,6 +48,7 @@
 	// 导入api请求
 	import api from '@/api/course-detail.js'
 	import mixin from '@/common/mixin/mixin.js'
+	import { url } from '@/common/utils/url.js'
 	
 	export default {
 		mixins: [mixin],
@@ -55,7 +64,6 @@
 			return {
 				tabs: [{name:'详情'}, {name:'章节'}, {name:'评论'}, {name:'推荐'}],
 				tabIndex: 0 ,// 当前tab的下标
-				tabBarTop: 0,
 				height: 0,
 				courseId: null,
 				detailTop: null,
@@ -97,6 +105,11 @@
 			}
 		},
 		async onLoad(option) {
+			// #ifndef APP-PLUS
+			let pages = getCurrentPages();
+			console.log(pages[pages.length - 1].route);
+			// #endif
+			
 			uni.showLoading({
 				title: '加载中...'
 			})
@@ -126,8 +139,6 @@
 			currentWebView.setStyle({scrollsToTop: false})
 			// #endif
 			
-			// 为了模拟一下id，因为有些模拟的数据没有返回id
-			this.courseId = option && option.id ? option.id : 123
 			await this.getCourseDetailSummary()
 			uni.hideLoading()
 			await this.getChapterSection()
@@ -156,6 +167,17 @@
 		onNavigationBarButtonTap(e) {
 			if(e.type === 'share' && !this.isShowShare) {
 				this.isShowShare = true
+			}
+		},
+		
+		// 小程序端分享（onLoad)
+		onShareAppMessage(res) {
+			// 获取当前的路由地址
+			let pages = getCurrentPages();
+			let route = pages[pages.length - 1].route
+			return {
+				title: this.detailInfo.title,
+				path: `/${route}?id=${this.detailInfo.id}`
 			}
 		},
 		
@@ -211,6 +233,19 @@
 				if(e.index === 0) {					
 					this.routerTo()
 				}
+				if(e.index === 1) {
+					// 这里应该判断一下是否已经进行了登录
+					uni.navigateTo({
+						url: '/pages/order/order',
+						success: (res)=> {
+							let info = this.detailInfo
+							if(info.id) {
+								let infoObj = {coverImage: info.coverImage, studyTotalFloat: info.studyTotalFloat, info:{title: info.title}, isFree: 0, priceDiscount: info.priceDiscount, priceOriginal: info.priceOriginal, nickName: info.nickName}
+								res.eventChannel.emit('detailInfo', [infoObj])
+							}				
+						}
+					})
+				}
 			},			
 			routerTo(isSee = false) {
 				uni.navigateTo({
@@ -235,6 +270,12 @@
 						res.eventChannel.emit('chapterList', params)
 					}
 				})
+			},
+			// 跳转到课程评价页面
+			navToEvaluate() {
+				uni.navigateTo({
+					url: '/pages/course-evaluate/course-evaluate'
+				})
 			}
 		},
 		destroyed() {
@@ -257,9 +298,13 @@
 		}
 						
 		.scroll-wrapper {
-			padding-bottom: 100rpx;
+			padding-bottom: calc(env(safe-area-inset-bottom) + 100rpx);
 		}
 		
+		// .safe-bottom {
+		// 	width: 100%;
+		// 	height: ;
+		// }
 		.goods-nav {
 			position: fixed;
 			bottom: 0;
@@ -267,6 +312,24 @@
 			// 设置
 			padding-bottom: env(safe-area-inset-bottom);
 			background-color: #FFFFFF;
+		}
+		
+		// 评论按钮
+		.write-commont-btn {
+			@include flex-layout($alignItem: center,$justifyContent: center);
+			position: fixed;
+			right: 20rpx;
+			z-index: 9999;
+			bottom: calc(130rpx + env(safe-area-inset-bottom));
+			background-color: #fadec1;
+			width: 100rpx;
+			height: 100rpx;
+			border-radius: 50rpx;
+			.iconfont {
+				color: #de6f35;
+				font-size: 40rpx;
+			}
+			transition: 2s;
 		}
 	}
 </style>

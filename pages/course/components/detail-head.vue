@@ -1,6 +1,6 @@
 <template>
 	<view class="detail-head-container">
-		<image class="img" :src="detailInfo.mainImage" mode="aspectFill"></image>
+		<image class="img" :src="detailInfo.coverImage" mode="aspectFill"></image>
 		<view class="shelter-from">
 			<view class="shelter-from-info">
 				<slot>

@@ -16,23 +16,7 @@
 		props:{
 			bannerList:{
 				type:Array,
-				default:() => ([
-					{
-						"id": 1,
-						"imageUrl": "/static/images/IMG_0004.png",
-						"advertUrl": "/pages/course/course-details?id=1"
-					},
-					{
-						"id": 2,
-						"imageUrl": "/static/images/IMG_0001.png",
-						"advertUrl": "/pages/course/course-details?id=2"
-					},
-					{
-						"id": 3,
-						"imageUrl": "/static/images/IMG_0002.png",
-						"advertUrl": "/pages/course/course-details?id=3"
-					}
-				])
+				required: true
 			}
 		}
 	}

@@ -16,7 +16,11 @@
 			<view class="course-list">
 				<view class="item-wrapper" v-for="(chapter,chapterIndex) of chapterList" :key="chapter.id">
 					<view class="chapter-name">{{chapter.title}}</view>
-					<view class="course-item" v-for="(section,sectionIndex) of chapter.sectionList" :key="section.id" @click="switchPlay(chapterIndex, sectionIndex, section.videoUrl, section.courseName)" :class="{active: chapterIndex === currentChapter && sectionIndex === currentSection}">
+					<view class="course-item" v-for="(section,sectionIndex) of chapter.sectionList" 
+						:key="section.id" 
+						@click="switchPlay(chapterIndex, sectionIndex, section.videoUrl,section.courseName)" 
+						:class="{active: chapterIndex === currentChapter && sectionIndex === currentSection}"
+					>
 						<text class="iconfont icon-24gf-playCircle play"></text>
 						<text class="text">{{section.courseName}}</text>
 						<text class="time">({{section.duration}})</text>

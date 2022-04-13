@@ -39,7 +39,7 @@
 			return {
 				detailInfo: {
 					isFree: 1,
-					mainImage: 'https://atts.w3cschool.cn/attachments/cover/cover_kudac.png?t=1606375501'
+					coverImage: 'https://atts.w3cschool.cn/attachments/cover/cover_kudac.png?t=1606375501'
 				}
 			}
 		}

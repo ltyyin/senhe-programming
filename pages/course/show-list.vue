@@ -5,7 +5,8 @@
 		</view>
 		
 		<view class="course-list">
-			<scroll-y-item v-for="(item,index) of info.records" :key="index" :course-info="item"></scroll-y-item>
+			<scroll-y-item v-for="(item,index) of info.records" :key="index" :course-info="item">
+			</scroll-y-item>
 		</view>
 	</view>
 </template>
@@ -54,6 +55,7 @@
 		}
 		
 		.course-list {
+			margin: 0 30rpx;
 			padding: 20rpx 0;
 		}
 	}

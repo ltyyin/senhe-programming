@@ -5,8 +5,8 @@
 				class="icon-item" 
 				v-for="(item,indIn) of navList.slice(rowIn * ind,(rowIn + 1) * ind)" 
 				:key="indIn" 
-				@click="navTo(`/pages/course/show-list?params=${encodeURIComponent(JSON.stringify({id:item.id,title:item.category.title}))}`)"
-				>
+				@click="navTo(`/pages/course/show-list?params=${encodeURIComponent(
+				JSON.stringify({id:item.id,title:item.category.title}))}`)">
 				<view class="image-wrap">
 					<image class="image" :src="item.category.imageUrl" mode="aspectFit"></image>
 				</view>

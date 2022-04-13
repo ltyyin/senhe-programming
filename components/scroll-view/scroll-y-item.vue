@@ -1,8 +1,7 @@
 <template>
-	<view class="scroll-y-item-container">		
-		
+	<view class="scroll-y-item-container" @click="navTo">
 		<view class="left-content">
-			<image class="img" :src="courseInfo.mockImage" mode="heightFix"></image>
+			<image class="img" :src="courseInfo.coverImage" mode="heightFix"></image>
 			<view class="play-count">
 				<text class="iconfont icon-bofang"></text>
 				<text>{{courseInfo.studyTotalFloat}}K</text>
@@ -16,7 +15,7 @@
 			
 	
 			<view class="info">
-				<text class="price">
+				<view class="price">
 					<template v-if="courseInfo.isFree">
 						<text class="current">免费</text>
 					</template>
@@ -24,12 +23,11 @@
 						<text class="current">￥{{courseInfo.priceDiscount}}</text>
 						<text class="original">{{courseInfo.priceOriginal}}</text>
 					</template>					
-				</text>
-				
-				<text class="author">
+				</view>
+				<view class="author">
 					<text class="iconfont icon-My"></text>
 					<text class="name">{{courseInfo.nickName}}</text>
-				</text>
+				</view>
 			</view>
 			
 		</view>
@@ -43,11 +41,18 @@
 				type: Object,
 				required: true
 			}
+		},
+		methods: {
+			navTo() {
+				uni.navigateTo({
+					url: `/pages/course/details?id=${this.courseInfo.id}`
+				})
+			}
 		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	@mixin hiddenWord() {
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -57,9 +62,7 @@
 	.scroll-y-item-container {		
 		display: flex;
 		background-color: #FFFFFF;
-		margin: 0 30rpx;
 		white-space: normal;
-		
 		margin-top: 10rpx;
 		margin-bottom: 30rpx;
 		
@@ -101,27 +104,21 @@
 		
 		.right-content {
 			$rightWidth:  410rpx;
-			width: $rightWidth;
-			position: relative;
-			
+			min-width: $rightWidth;
 			.title {
 				font-weight: 600;
-				font-size: 30rpx;				
+				font-size: 30rpx;
+				min-height: 80rpx;
 				@include text-ellipsis(2)
 			}
 			
-			
-			.info {		
-				display: flex;
-				height: 50rpx;
-				align-items: center;
-				position: absolute;
-				width: $rightWidth;
-				bottom: 0;
-				align-items: center;
-								
+			.info {	
+				@include flex-layout($alignItem: center);
+				margin-top: 10rpx;
+				width: 100%;
 				.price {
-					margin-right: 60rpx;
+					flex: 1;
+					min-width: 270rpx;
 					.current {
 						font-size: 30rpx;
 						font-weight: 600;
@@ -132,20 +129,15 @@
 						font-size: 26rpx;
 						text-decoration: line-through;
 						color: #afafaf;
-						position: absolute;
-						top: 10rpx;
-						left: 135rpx;
 					}
 				}
 				
 				.author {
 					@include hiddenWord;
+					flex: 1;
 					font-size: 25rpx;
 					color: #b6b6b6;
-					width: 160rpx;					
-					position: absolute;
-					top: 8rpx;
-					right: 0rpx;
+					width: 160rpx;
 				}				
 			}		
 		}		

@@ -11,10 +11,12 @@
 			:top="top"
 			>
 			<view class="touch">
-				<down-bar :down-bars="downBars" @search="search"></down-bar>		
-				<template v-for="(item,index) of courseList">
-					<scroll-y-item  :key="item.id" :course-info="item"></scroll-y-item>
-				</template>
+				<down-bar :down-bars="downBars" @search="search"></down-bar>
+				<view class="scroll-view-y">
+					<template v-for="(item,index) of courseList">
+						<scroll-y-item  :key="item.id" :course-info="item"></scroll-y-item>
+					</template>
+				</view>
 			</view>
 		</mescroll-uni>
 	</view>
@@ -143,6 +145,10 @@
 			touch-action: pan-x;
 			/* #endif */
 			background-color: #FFFFFF;
+			
+			.scroll-view-y {
+				margin: 0 30rpx;
+			}
 		}
 		
 	}

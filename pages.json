@@ -179,8 +179,48 @@
 					]
 				}
 			}            
+		},
+		{
+			"path" : "pages/course-evaluate/course-evaluate",
+			"style" :                                                                                    
+			{
+				"navigationBarTitleText": "课程评价"
+			}				
+		},
+		{
+			"path" : "pages/order/order",
+			"style" :                                                                                    
+			{
+				"navigationBarTitleText": "确认订单"
+			}
+    },
+		{
+			"path" : "pages/order/recharge",
+			"style" :                                                                                    
+			{
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"navigationBarTitleText": "我的账户",
+				"backgroundColorTop": "#f6f6f6",
+				"backgroundColorBottom": "FFFFFF",
+				"app-plus": {
+					"scrollIndicator": "none"					
+				}
+			}
+		},
+		{
+			"path" : "pages/order/my-order",
+			"style" :                                                                                    
+			{
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"navigationBarTitleText": "我的订单",
+				"backgroundColorTop": "#f6f6f6",
+				"backgroundColorBottom": "FFFFFF",
+				"app-plus": {
+					"scrollIndicator": "none"					
+				}
+			}
 		}
-  ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarBackgroundColor": "#FFF",

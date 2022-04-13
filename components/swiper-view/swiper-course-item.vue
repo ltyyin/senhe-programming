@@ -1,5 +1,5 @@
 <template>
-	<view class="swiper-course-item-container">
+	<view class="swiper-course-item-container" @click="navTo">
 		<view class="left-content">
 			<image class="img" :src="courseInfo.info.cover" mode="widthFix"></image>
 			<view class="tag">
@@ -25,6 +25,13 @@
 			courseInfo: {
 				type: Object,
 				required: true
+			}
+		},
+		methods: {
+			navTo() {
+				uni.navigateTo({
+					url: `/pages/course/details?id=${this.courseInfo.id}`
+				})
 			}
 		}
 	}

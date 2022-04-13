@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<button type="default" @click="sendNet">发起网路请求</button>
+		<button type="default" @click="myOrder">我的订单</button>
 	</view>
 </template>
 
@@ -27,14 +27,10 @@
 			}
 		},
 		methods: {
-			async	sendNet() {
-				try{
-					const result = await request()
-					msg({title: '请求成功!'})
-					console.log(result)
-				}catch(e){
-					console.log(e)
-				}
+			myOrder() {
+				uni.navigateTo({
+					url: '/pages/order/my-order'
+				})
 			}
 		}
 	}
