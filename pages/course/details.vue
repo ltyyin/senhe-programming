@@ -65,7 +65,8 @@
 				tabs: [{name:'详情'}, {name:'章节'}, {name:'评论'}, {name:'推荐'}],
 				tabIndex: 0 ,// 当前tab的下标
 				height: 0,
-				courseId: null,
+				// 在预览窗口点击跳转详情后携带的参数
+				queryParams: null,
 				detailTop: null,
 				enableScroll: false,
 				statusBarHeight: 0,
@@ -139,22 +140,34 @@
 			currentWebView.setStyle({scrollsToTop: false})
 			// #endif
 			
-			await this.getCourseDetailSummary()
-			uni.hideLoading()
-			await this.getChapterSection()
-			await this.getCourseRecommend()
+			/* 路由跳转到该页面后所传递的参数 */
+			// #ifdef APP-NVUE
+				const eventChannel = this.$scope.eventChannel; // 兼容APP-NVUE
+			// #endif
+			// #ifndef APP-NVUE
+			  const eventChannel = this.getOpenerEventChannel();
+			// #endif
+			/* 正式接收 */
+			eventChannel.on('params', async (data)=> {
+				this.queryParams = data
+				
+				await this.getCourseDetailSummary()
+				uni.hideLoading()
+				await this.getChapterSection()
+				await this.getCourseRecommend()
+			})
 		},
 		onReady() {
 			uni.createSelectorQuery().in(this).select(`.swiper-wrapper`)
 			.boundingClientRect(data => {
 				// #ifdef H5
-				this.detailTop = data.top - 44
+					this.detailTop = data.top - 44
 				// #endif
 				// #ifdef	MP
-				this.detailTop = data.top
+					this.detailTop = data.top
 				// #endif
 				// #ifdef APP-PLUS
-				this.detailTop = data.top - 44 - this.statusBarHeight
+					this.detailTop = data.top - 44 - this.statusBarHeight
 				// #endif
 			}).exec();
 		},
@@ -196,18 +209,21 @@
 			},
 			
 			async getCourseDetailSummary() {
-				const { data } = await api.getCourseDetailSummary(this.courseId)
+				const { data } = await api.getCourseDetailSummary(
+					this.queryParams.id,
+					this.queryParams.isFree
+				)
 				this.detailInfo = data
 				uni.setNavigationBarTitle({
 					title: this.detailInfo.title
 				})
 			},			
 			async getChapterSection() {
-				const { data } = await api.getChapterSection(this.courseId)
+				const { data } = await api.getChapterSection(this.queryParams.id)
 				this.chapterList = data
 			},			
 			async getCourseRecommend() {
-				const { data } = await api.getCourseRecommend(this.courseId)
+				const { data } = await api.getCourseRecommend(this.queryParams.id)
 				this.recommendList = data
 			},
 			
@@ -240,7 +256,15 @@
 						success: (res)=> {
 							let info = this.detailInfo
 							if(info.id) {
-								let infoObj = {coverImage: info.coverImage, studyTotalFloat: info.studyTotalFloat, info:{title: info.title}, isFree: 0, priceDiscount: info.priceDiscount, priceOriginal: info.priceOriginal, nickName: info.nickName}
+								let infoObj = {
+									coverImage: info.coverImage,
+									studyTotalFloat: info.studyTotalFloat,
+									info:{title: info.title},
+									isFree: 0,
+									priceDiscount: info.priceDiscount,
+									priceOriginal: info.priceOriginal,
+									nickName: info.nickName,
+								}
 								res.eventChannel.emit('detailInfo', [infoObj])
 							}				
 						}
@@ -301,10 +325,6 @@
 			padding-bottom: calc(env(safe-area-inset-bottom) + 100rpx);
 		}
 		
-		// .safe-bottom {
-		// 	width: 100%;
-		// 	height: ;
-		// }
 		.goods-nav {
 			position: fixed;
 			bottom: 0;
@@ -316,7 +336,7 @@
 		
 		// 评论按钮
 		.write-commont-btn {
-			@include flex-layout($alignItem: center,$justifyContent: center);
+			@include flex-layout($alignItems: center,$justifyContent: center);
 			position: fixed;
 			right: 20rpx;
 			z-index: 9999;

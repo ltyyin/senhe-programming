@@ -30,7 +30,13 @@
 		methods: {
 			navTo() {
 				uni.navigateTo({
-					url: `/pages/course/details?id=${this.courseInfo.id}`
+					url: `/pages/course/details`,
+					success: (res)=> {
+					  res.eventChannel.emit('params', {
+							id: this.courseInfo.id,
+							isFree: this.courseInfo.isFree
+						})
+					}
 				})
 			}
 		}

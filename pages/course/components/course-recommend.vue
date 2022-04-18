@@ -68,7 +68,7 @@
 						@include text-overflow;
 					}
 					.course-count {
-						@include flex-layout($alignItem: center);
+						@include flex-layout($alignItems: center);
 						font-size: 26rpx;
 						padding: 12rpx 0;
 						color: #919191;

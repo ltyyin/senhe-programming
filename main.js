@@ -1,10 +1,19 @@
 import App from './App'
-
+import store from './store'
 // UI组件库
 import uView from '@/uni_modules/uview-ui'
 Vue.use(uView)
 // 如此配置即可
 uni.$u.config.unit = 'rpx'
+
+// 提示框
+Vue.prototype.$toast = (title) => {
+	uni.showToast({
+		title,
+		icon: 'none'
+	})
+}
+
 
 // dayjs 时间处理
 import './common/utils/dayjs.js'
@@ -14,7 +23,8 @@ import Vue from 'vue'
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
-    ...App
+    ...App,
+		store
 })
 app.$mount()
 // #endif

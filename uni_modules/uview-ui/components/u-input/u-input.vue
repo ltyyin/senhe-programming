@@ -223,7 +223,7 @@ export default {
         },
         // 输入框失去焦点时触发
         onBlur(event) {
-            this.$emit("blur", event.detail.value);
+            this.$emit("blur", event);
             // H5端的blur会先于点击清除控件的点击click事件触发，导致focused
             // 瞬间为false，从而隐藏了清除控件而无法被点击到
             uni.$u.sleep(50).then(() => {

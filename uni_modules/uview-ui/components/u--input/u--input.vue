@@ -36,7 +36,7 @@
 		:customStyle="customStyle"
 		:formatter="formatter"
 		@focus="$emit('focus')"
-		@blur="$emit('blur')"
+		@blur="e => $emit('blur', e)"
 		@keyboardheightchange="$emit('keyboardheightchange')"
 		@change="e => $emit('change', e)"
 		@input="e => $emit('input', e)"
@@ -67,6 +67,6 @@
 		mixins: [uni.$u.mpMixin, props, uni.$u.mixin],
 		components: {
 			uvInput
-		},
+		}
 	}
 </script>

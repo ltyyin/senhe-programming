@@ -1,9 +1,9 @@
 import request from '@/common/utils/request.js'
 
 export default {
-	getCourseDetailSummary(id) {
+	getCourseDetailSummary(id, isFree) {
 		return request({
-			url: `/course-details?id=${id}`
+			url: `/course-details?id=${id}&isFree=${isFree}`
 		})
 	},
 	
@@ -28,6 +28,14 @@ export default {
 	getVideoList(id) {
 		return request({
 			url: `/course-details/videoList?id=${id}`
+		})
+	},
+	
+	commitComment(data) {
+		return request({
+			url: '',
+			method: 'POST',
+			data
 		})
 	}
 }

@@ -2,7 +2,11 @@
 	<view class="search-index-container">
 		<!-- #ifdef MP -->
 		<!-- 替换组件的清除图标 -->
-		<uni-search-bar :value='content' :focus="isFocus" placeholder="搜索你想要搜索的内容" @confirm="doSearch" @cancel="navBack()" cancelButton="always"></uni-search-bar>
+		<uni-search-bar :value='content' :focus="isFocus" 
+			placeholder="搜索你想要搜索的内容" @confirm="doSearch"
+			@cancel="navBack()" cancelButton="always"
+		>
+		</uni-search-bar>
 		<!-- #endif -->	
 			
 		<template v-if="isShowKeyWords">
@@ -141,7 +145,6 @@
 			// 轮播菜单
 			swiperChange(e){
 				this.tabIndex = e.detail.current
-				
 			},
 			
 			historyStorage(val) {
@@ -180,15 +183,10 @@
 				// #endif
 				
 				this.historyStorage(obj.value)
-				
 				this.$nextTick(()=>{
 					let name = `mescrollItem${this.tabIndex}`
-					this.$refs[name].search()
+					this.$refs[name].search(this.content)
 				})
-				
-				setTimeout(()=>{
-					// uni.showLoading()
-				}, 500)
 			}			
 		}
 	}

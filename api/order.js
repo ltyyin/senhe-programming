@@ -15,3 +15,24 @@ export function fetchAlipay(data) {
 		data
   })
 }
+
+export function fetchTradeOrder(data) {
+	return request({
+	  url: '/order',
+	  method: 'get'
+	})
+}
+
+export function cancelTradeOrder(id) {
+	return request({
+	  url: `/order/cancel/${id}`,
+	  method: 'get'
+	})
+}
+
+export function delTradeOrder(id) {
+	return request({
+	  url: `/order/delete/${id}`,
+	  method: 'delete'
+	})
+}

@@ -45,7 +45,21 @@
 		{
 			"path": "pages/read/read",
 			"style": {
-				"navigationBarTitleText": "阅读"	
+				"navigationBarTitleText": "阅读"	,
+				"app-plus": {
+					"bounce":"none",
+					"titleNView": {
+						"backgroundColor": "#FFF",
+						"searchInput": {
+							"align":"left",
+							"backgroundColor":"#e8e8e8",
+							"borderRadius": "10rpx",
+							"placeholder": "前方是明亮的灯塔",
+							"placeholderColor": "#999999",
+							"disabled": true	
+						}
+					}
+				}
 			}
 		},
 		{
@@ -57,9 +71,9 @@
 		{
 			"path": "pages/my/my",
 			"style": {
-				"navigationBarTitleText": "我的"
-				// #ifdef APP-PLUS
-				,"app-plus": {
+				"navigationBarTitleText": "我",
+				"app-plus": {
+					// #ifdef APP-PLUS
 					"titleNView": {
 						"buttons": [
 							{
@@ -67,9 +81,10 @@
 								"text": "\ue891"
 							}
 						]
-					}
+					},
+					// #endif
+					"scrollIndicator": "none"
 				}
-				// #endif
 			}
 		},
 		{
@@ -84,7 +99,6 @@
 		{
 			"path" : "pages/search/search",
 			"style": {
-				"navigationBarBackgroundColor":"#FFFFFF",
 				"navigationBarTitleText":"搜索查询",
 				"app-plus": {
 					"bounce":"none",
@@ -142,8 +156,8 @@
 			}
 		},
 		{
-			"path" : "pages/recommend-list/recommend-list",
-			"style" :{
+			"path": "pages/recommend-list/recommend-list",
+			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"app-plus": {
@@ -188,17 +202,15 @@
 			}				
 		},
 		{
-			"path" : "pages/order/order",
-			"style" :                                                                                    
-			{
+			"path": "pages/order/order",
+			"style": {
 				"navigationBarTitleText": "确认订单"
 			}
     },
 		{
-			"path" : "pages/order/recharge",
-			"style" :                                                                                    
+			"path": "pages/order/recharge",
+			"style":                                                                                    
 			{
-				"navigationBarBackgroundColor":"#FFFFFF",
 				"navigationBarTitleText": "我的账户",
 				"backgroundColorTop": "#f6f6f6",
 				"backgroundColorBottom": "FFFFFF",
@@ -208,15 +220,88 @@
 			}
 		},
 		{
-			"path" : "pages/order/my-order",
-			"style" :                                                                                    
-			{
-				"navigationBarBackgroundColor":"#FFFFFF",
+			"path": "pages/order/my-order",
+			"style": {
 				"navigationBarTitleText": "我的订单",
 				"backgroundColorTop": "#f6f6f6",
 				"backgroundColorBottom": "FFFFFF",
 				"app-plus": {
 					"scrollIndicator": "none"					
+				}
+			}
+		},
+		{
+			"path" : "pages/setting/setting",
+			"style": {
+				"navigationBarTitleText": "设置",
+				"app-plus": {
+					"scrollIndicator": "none"					
+				}
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"app-plus": {
+					"scrollIndicator": "none",
+					"animationType": "slide-in-bottom"
+				}
+			}
+		},
+		{
+			"path": "pages/login/bind-phone",
+			"style": {
+				"navigationBarTitleText":"绑定手机",
+				"app-plus": {
+					"scrollIndicator": "none",
+					"animationType": "slide-in-bottom"
+				}
+			}
+		},
+		{
+			"path": "pages/login/wx-login",
+			"style": {
+				"navigationBarTitleText": "森和编程",
+				"app-plus": {
+					"scrollIndicator": "none",
+					"animationType": "slide-in-bottom"
+				}
+			}
+		},
+		{
+			"path": "pages/my/info",
+			"style": {
+				"navigationBarTitleText": "个人质料",
+				"app-plus": {
+					"scrollIndicator": "none",
+					"animationType": "slide-in-bottom"
+				}
+			}
+		},
+		{
+			"path": "pages/about/about",
+			"style": {
+				"navigationBarTitleText": "关于我们",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/feedback/feedback",
+			"style": {
+				"navigationBarTitleText": "意见反馈",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/my-course/my-course",
+			"style": {
+				"navigationBarTitleText": "我的课程",
+				"app-plus": {
+					"scrollIndicator": "none"
 				}
 			}
 		}
@@ -227,15 +312,15 @@
 		"backgroundColor": "#F8F8F8",
 		"backgroundColorTop":"#FFF"
 	},
-	"tabBar":{
+	"tabBar": {
 		"color":"#BFBFBF",
 		"backgroundColor":"#ffffff",
 		"selectedColor":"#1eddb2",
 		"borderStyle":"white",
 		// #ifdef APP-PLUS || H5
-		"height":"52px",
+		// "height":"52px",
 		// #endif
-		"list":[
+		"list": [
 			{
 				"text":"首页",
 				"pagePath":"pages/index/index",

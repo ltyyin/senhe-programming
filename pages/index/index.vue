@@ -1,12 +1,25 @@
 <template>
-	<view class="home-container" :style="{paddingTop: `${navBarHeight}rpx`}">
+	<!-- :style="{paddingTop: `${navBarHeight}rpx`}" -->
+	<view class="home-container">
 		<!-- 小程序自定义的搜索栏 -->
 		<!-- #ifdef MP --> 
-		<search-input @navBarHeight="navBarHeight = $event"></search-input>
+		<!-- <search-input @navBarHeight="navBarHeight = $event"></search-input> -->
+			<u-navbar title="森和编程" @rightClick="rightClick"
+			:autoBack="true" placeholder titleStyle="font-weight:500; color:#1a1a1a;"
+			>
+				<view slot="left" class="search-frame" @click="navTo('/pages/search/search')">
+					<text class="iconfont icon-search"></text>
+					<text class="line"></text>
+					<text>搜索</text>
+				</view>
+			</u-navbar>
 		<!-- #endif -->
 			
 		<!-- 自定义的刷新样式 -->
-		<mescroll-body-diy ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :bottombar="false" :down="downOption" :up="upOption">
+		<mescroll-body-diy ref="mescrollRef" 
+			@init="mescrollInit" @down="downCallback"
+			@up="upCallback" :bottombar="false" :down="downOption" :up="upOption"
+		>
 			<!-- 轮播图 -->
 			<banner-img :banner-list="bannerList"></banner-img>
 			
@@ -45,7 +58,7 @@
 </template>
 
 <script>
-	import searchInput from '@/components/search-input-one.vue'
+	import searchInput from '@/components/search-input.vue'
 	import bannerImg from '@/components/banner-img.vue'
 	import news from './components/news.vue'
 	import navList from './components/nav-list.vue'
@@ -195,7 +208,22 @@
 </script>
 
 <style lang="scss">
-	.home-container {
-		background-color: $page-background-color;
-	}
+.home-container {
+	background-color: $page-background-color;
+}
+.search-frame {
+	height: 55rpx;
+	width: 150rpx;
+	border-radius: 40rpx;
+	background-color: #f3f3f3;
+	font-size: 25rpx;
+	@include flex-layout($justifyContent: space-evenly,$alignItems: center);
+	color: #6d6d6d;
+				
+	.line {
+		width: 1rpx;
+		height: 60%;
+		background-color: #bdbdbd;
+	}			
+}
 </style>

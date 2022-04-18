@@ -63,7 +63,7 @@
 	.course-comment-container {
 		padding: 20rpx 30rpx;
 		.comprehensive-score {
-			@include flex-layout($alignItem: center);
+			@include flex-layout($alignItems: center);
 			background-color: #f8f8f8;
 			padding: 25rpx 20rpx;
 			border-radius: 10rpx;
@@ -99,7 +99,7 @@
 					flex: 1;
 					font-size: 26rpx;
 					.nick-name {
-						@include flex-layout($alignItem: center,$justifyContent: space-between);
+						@include flex-layout($alignItems: center,$justifyContent: space-between);
 						font-size: 32rpx;
 					}
 					.main-content {

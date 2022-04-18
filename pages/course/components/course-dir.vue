@@ -51,7 +51,7 @@
 			font-size: 32rpx;
 			border-bottom: 2rpx solid #f1f1f1;
 			color: #959595;
-			@include flex-layout($alignItem: center);
+			@include flex-layout($alignItems: center);
 			.lock {
 				font-size: 28rpx;
 			}

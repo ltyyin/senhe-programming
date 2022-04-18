@@ -291,7 +291,7 @@
 	.share-wrapper {
 		padding: 0 20rpx;
 		.item-wrapper {
-			@include flex-layout($alignItem: center, $justifyContent: space-around);
+			@include flex-layout($alignItems: center, $justifyContent: space-around);
 			/* #ifdef APP-PLUS */
 			height: 200rpx;
 			/* #endif */
@@ -300,7 +300,7 @@
 			/* #endif */
 			$size: 80rpx;
 			.icon-item {
-				@include flex-layout($direction: column, $alignItem: center);
+				@include flex-layout($direction: column, $alignItems: center);
 				font-size: 30rpx;
 				width: 130rpx;
 				.img {
@@ -315,7 +315,7 @@
 			}
 		}
 		.copy-link {
-			@include flex-layout($alignItem: center, $justifyContent: space-around);
+			@include flex-layout($alignItems: center, $justifyContent: space-around);
 			background-color: #eeeeee;
 			margin-bottom: 50rpx;
 			margin-top: 20rpx;

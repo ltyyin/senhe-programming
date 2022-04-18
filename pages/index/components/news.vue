@@ -2,8 +2,14 @@
 	<view class="news-container">
 		<view class="news-inner">
 			<image class="news-icon" src="/static/iconImages/news.png" mode="aspectFit"></image>	
-					
-			<swiper class="swiper-text" disable-touch autoplay :touchable="false" :interval="3000" :duration="1000" circular vertical>
+			<swiper
+				class="swiper-text"
+				disable-touch autoplay
+				:touchable="false"
+				:interval="3000"
+				:duration="1000"
+				circular vertical
+			>
 				<swiper-item class="swiper-item" v-for="(item,index) of newsList" :key="index">
 					<text>{{item.content}}</text>
 				</swiper-item>

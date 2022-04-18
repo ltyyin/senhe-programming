@@ -47,7 +47,7 @@
 		padding: 20rpx 30rpx;
 		// height: 500px;
 		.author-info {
-			@include flex-layout($alignItem: center);
+			@include flex-layout($alignItems: center);
 			font-size: 28rpx;
 			padding: 15rpx 0;
 			border-bottom: 1rpx solid #efefef;

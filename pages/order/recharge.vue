@@ -11,15 +11,14 @@
 				<text class="help">ios支付帮助></text>
 			</view>
 			<view class="option">
-				<view class="option-item">6元宝</view>
-				<view class="option-item">6元宝</view>
-				<view class="option-item">6元宝</view>
-				<view class="option-item">6元宝</view>
-				<view class="option-item">6元宝</view>
-				<view class="option-item">6元宝</view>
+				<template v-for="(item,index) of gather">
+					<view  @click="switchPrice(item,index)" :key="item.id" 
+						class="option-item" :class="{active: index === current}"
+					>{{item.price}}元宝</view>
+				</template>
 			</view>
-			<view class="actually-paid">支付金额: 269元</view>
-			<button type="default">确认支付</button>			
+			<view class="actually-paid">支付金额: {{payment}}元</view>
+			<button type="default" @click="commitPayment">确认支付</button>			
 		</view>
 		
 		<view class="space-bar"></view>
@@ -38,7 +37,48 @@
 
 <script>
 	export default {
-		
+		data() {
+			return {
+				current: 0,
+				gather: [
+					{ price: 6, id: 1},
+					{ price: 30, id: 2},
+					{ price: 68, id: 3},
+					{ price: 108, id: 4},
+					{ price: 268, id: 5},
+					{ price: 698, id: 6},
+				]
+			}
+		},
+		computed: {
+			payment() {
+				return this.gather[this.current].price
+			}
+		},
+		methods: {
+			switchPrice(item,index) {
+				this.current = index
+			},
+			commitPayment() {
+				uni.showModal({
+					title: '提示',
+					content: '确定要进行充值吗',
+					confirmColor: '#42b983',
+					success: (res)=> {
+						if(res.confirm) {
+							uni.showLoading({
+								title: '充值中...',
+								mask: true
+							})
+							setTimeout(()=> {
+								uni.hideLoading()
+								uni.navigateBack()
+							},2000,)
+						}
+					}
+				})
+			}
+		}
 	}
 </script>
 
@@ -47,7 +87,7 @@
 		// 账户余额
 		.account-balance {
 			background-color: #f6f6f6;
-			@include flex-layout($direction: column, $alignItem: center);
+			@include flex-layout($direction: column, $alignItems: center);
 			padding: 40rpx 0;
 			.balance {
 				font-weight: 600;
@@ -65,14 +105,14 @@
 			.title {
 				padding: 20rpx 0;
 				margin-bottom: 10rpx;
-				@include flex-layout($alignItem: center,$justifyContent: space-between);
+				@include flex-layout($alignItems: center,$justifyContent: space-between);
 				.help {
 					font-size: 26rpx;
 					color: #626262;
 				}
 			}
 			.option {
-				@include flex-layout($alignItem: center,$justifyContent:space-between);
+				@include flex-layout($alignItems: center,$justifyContent:space-between);
 				flex-wrap: wrap;
 				&>view {
 					box-sizing: border-box;
@@ -83,6 +123,9 @@
 					line-height: 100rpx;
 					border-radius: 10rpx;
 					margin-bottom: 20rpx;
+				}
+				.active {
+					border-color: $darkGreen;
 				}
 			}
 			.actually-paid {

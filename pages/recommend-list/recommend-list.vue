@@ -62,7 +62,7 @@
 		.show-list {			
 			padding: 20rpx 30rpx;
 			.summary {
-				@include flex-layout($justifyContent: center, $alignItem: center);
+				@include flex-layout($justifyContent: center, $alignItems: center);
 				height: 80rpx;
 				font-size: 30rpx;
 				color: #7d7d7d;

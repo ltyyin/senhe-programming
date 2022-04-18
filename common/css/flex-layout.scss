@@ -1,0 +1,46 @@
+@mixin flexLayout($dir: row, $jc: none, $ai: none){
+	/* #ifndef APP-NVUE */
+	display: flex;
+	/* #endif */
+	flex-direction: $dir;
+	@if $jc  != none {
+		justify-content: $jc;
+	}
+	@if $ai != none {
+		align-items: $ai;
+	}
+}
+
+/* flex布局，中间对齐 */
+.center{
+	@include flexLayout($jc: center, $ai: center);
+}
+
+.row {
+	align-items: center;
+	@include flexLayout($ai: center);
+}
+
+.f-c-c {
+	@include flexLayout($jc: center, $ai: center);
+}
+
+.f-c-s {
+	@include flexLayout($jc: center, $ai: flex-start);
+}
+
+.f-c-e {
+	@include flexLayout($jc: center, $ai: flex-end);
+}
+
+.f-sa-c {
+	@include flexLayout($jc: space-around, $ai: center);
+}
+
+.f-sb-c {
+	@include flexLayout($jc: space-between, $ai: center);
+}
+
+.f-col-c-c {
+	@include flexLayout($dir: column, $jc: center, $ai: center);
+}

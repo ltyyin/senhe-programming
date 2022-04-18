@@ -263,7 +263,7 @@
 				top: 0;
 				width: 750rpx;
 				padding: 0 20rpx;
-				@include flex-layout($alignItem: center);
+				@include flex-layout($alignItems: center);
 				height: 80rpx;
 				background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)  70px);
 				.arrow-left {
@@ -281,7 +281,7 @@
 			
 			// 中间播放按钮的样式
 			.play-but-wrapper {
-				@include flex-layout($justifyContent: center, $alignItem: center);
+				@include flex-layout($justifyContent: center, $alignItems: center);
 				background-color: transparent;
 				position: absolute;
 				top: 80rpx;
@@ -293,7 +293,7 @@
 					height: 100rpx;
 					background-color: rgba(0,0,0,.5);
 					border-radius: 10rpx;
-					@include flex-layout($justifyContent: center, $alignItem: center);
+					@include flex-layout($justifyContent: center, $alignItems: center);
 					.play {
 						font-size: 80rpx;
 					}
@@ -308,7 +308,7 @@
 				height: $height;
 				position: absolute;
 				bottom: 0;
-				@include flex-layout($justifyContent: space-between, $alignItem: center);
+				@include flex-layout($justifyContent: space-between, $alignItems: center);
 				
 				.iconfont {
 					font-size: 50rpx;
@@ -324,7 +324,7 @@
 				}
 				
 				.control-left {
-					@include flex-layout($justifyContent: space-between, $alignItem: center);
+					@include flex-layout($justifyContent: space-between, $alignItems: center);
 				}
 				
 				.slider-wrapper {

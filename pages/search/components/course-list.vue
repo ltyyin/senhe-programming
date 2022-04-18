@@ -1,8 +1,8 @@
 <template>
-	<view class="course-list-container">		
+	<view class="course-list-container">	
+		<!-- @init="mescrollInit" -->
 		<mescroll-uni 
-			:ref="'mescrollRef'+i" 
-			@init="mescrollInit" 
+			:ref="'mescrollRef'+i"
 			:down="downOption" 
 			@down="downCallback" 
 			:up="upOption" 
@@ -56,6 +56,7 @@
 		},
 		data() {
 			return {
+				init: true,
 				// #ifdef MP || APP-PLUS
 				top: 0,
 				// #endif
@@ -96,17 +97,28 @@
 				}
 			}
 		},
+		mounted() {
+			this.$nextTick(()=>{
+				this.init = false
+			})
+		},
 		methods: {
 			search(options) {
 				if(options){
+					if(!this.init){
+						uni.showLoading({
+							title: '加载中...'
+						})
+					}
 					for(let [k,v] of Object.entries(options)) {
-						this.queryCondition[k] = v
+						this.$set(this.queryCondition, k, v)
 					}
 					this.mescroll.resetUpScroll()
 				}
 			},
 			
 			downCallback() {
+				// if(this.init) return
 				this.mescroll.resetUpScroll()
 			},
 			

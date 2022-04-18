@@ -189,13 +189,13 @@
 				border-bottom: 2rpx solid #ebebeb;
 				font-weight: 600;
 				padding: 30rpx 0;
-				@include flex-layout($alignItem: center,$justifyContent: space-between);
+				@include flex-layout($alignItems: center,$justifyContent: space-between);
 				.content {
 					@include text-ellipsis(2);
 					padding-right: 20rpx;
 				}
 				.right-detail {
-					@include flex-layout($alignItem: center);
+					@include flex-layout($alignItems: center);
 					.detail {
 						min-width: 70rpx;
 					}

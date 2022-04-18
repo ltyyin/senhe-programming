@@ -94,7 +94,7 @@
 <style lang="scss">
 	.slider-wrapper {
 		height: 90rpx;
-		@include flex-layout($justifyContent: center, $alignItem: center);
+		@include flex-layout($justifyContent: center, $alignItems: center);
 	}
 	.slider-left{
 		/* flex: 1; */

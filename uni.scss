@@ -1,5 +1,7 @@
 /* uni.scss */
 @import '@/uni_modules/uview-ui/theme.scss';
+/* flex布局 */
+@import '@/common/css/flex-layout.scss';
 
 /* 自定义颜色 */
 $senhe-theme-color: #1eddb2;
@@ -26,7 +28,7 @@ $price-color: #fe6a00;
 	white-space: nowrap;
 }
 
-@mixin flex-layout($direction: row, $justifyContent: none, $alignItem: none){
+@mixin flex-layout($direction: row, $justifyContent: none, $alignItems: none){
 	/* #ifndef APP-NVUE */
 	display: flex;
 	/* #endif */
@@ -34,7 +36,13 @@ $price-color: #fe6a00;
 	@if $justifyContent  != none {
 		justify-content: $justifyContent;
 	}
-	@if $alignItem != none {
-		align-items: $alignItem;
+	@if $alignItems != none {
+		align-items: $alignItems;
 	}
 }
+
+/* 下划线 */
+$underline: 0.5px solid #efeff4;
+
+$pageBackgroundColor: #f6f6f6;
+$darkGreen: #42b983;

@@ -1,5 +1,7 @@
 <template>
-	<view class="down-bar-container row" @touchmove.stop.prevent="()=> {}">		
+	<view class="down-bar-container row" @touchmove.stop.prevent="" 
+	@wheel.stop.prevent=""
+	>		
 		<view class="sort-title" v-for="(sort,index) of downBarList" :key="sort.id">
 			<view class="text center" @click="switchSort(index)">
 				<text>{{sort.title}}</text>
@@ -65,6 +67,7 @@
 				})
 			},
 			closeShowSort() {
+				console.log('hi');
 				if(this.isShowSortItem){
 					 this.isShowSortItem = false
 					 this.clickCount = 0

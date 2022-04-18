@@ -7,7 +7,5 @@
   "main": "index.js",
   "author": "tyyin <lantaiying@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "video.js": "^7.18.1"
-  }
+  "devDependencies": {}
 }
