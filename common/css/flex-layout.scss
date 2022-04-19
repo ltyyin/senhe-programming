@@ -41,6 +41,10 @@
 	@include flexLayout($jc: space-between, $ai: center);
 }
 
+.f-fa-c {
+	@include flexLayout($jc: flex-start, $ai: center);
+}
+
 .f-col-c-c {
 	@include flexLayout($dir: column, $jc: center, $ai: center);
 }

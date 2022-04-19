@@ -65,7 +65,21 @@
 		{
 			"path": "pages/question/question",
 			"style": {
-				"navigationBarTitleText": "问答"
+				"navigationBarTitleText": "问答",
+				"app-plus": {
+					"bounce":"none",
+					"titleNView": {
+						"backgroundColor": "#FFF",
+						"searchInput": {
+							"align":"left",
+							"backgroundColor":"#e8e8e8",
+							"borderRadius": "10rpx",
+							"placeholder": "尽情遨游知识海洋",
+							"placeholderColor": "#999999",
+							"disabled": true	
+						}
+					}
+				}
 			}
 		},
 		{
@@ -300,6 +314,30 @@
 			"path": "pages/my-course/my-course",
 			"style": {
 				"navigationBarTitleText": "我的课程",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/read/article-detail",
+			"style": {
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/question/question-detail",
+			"style": {
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/inpute/inpute",
+			"style": {
 				"app-plus": {
 					"scrollIndicator": "none"
 				}

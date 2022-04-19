@@ -57,9 +57,6 @@
 	/* #endif */
 	
 	/* 修改H5的 搜索框样式 */
-	.uni-page-head {
-		/* border-bottom: 1rpx solid #f3f3f3; */
-	}
 	.uni-page-head-search {
 		margin: 0 40rpx;
 	}
