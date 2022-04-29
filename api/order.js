@@ -16,11 +16,11 @@ export function fetchAlipay(data) {
   })
 }
 
-export function fetchTradeOrder(data) {
+export function fetchTradeOrder() {
 	return request({
 	  url: '/order',
-	  method: 'get'
-	})
+	  method: 'get',
+	}, true)
 }
 
 export function cancelTradeOrder(id) {

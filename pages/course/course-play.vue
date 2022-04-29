@@ -1,7 +1,7 @@
 <template>
 	<view class="course-play-container">
 		<!-- #ifndef APP-PLUS -->
-		<video id="videoPlayer" style="width: 750rpx; height: 423rpx;" :poster="poster" :src="src"></video>
+		<video class="video" id="videoPlayer" :poster="poster" :src="src"></video>
 		<!-- #endif -->
 		
 		<view class="list-wrapper" v-if="isShowList">
@@ -182,7 +182,27 @@
 	// 	height: 18rpx !important;
 	// }
 	.course-play-container {
+		$video-height: 423rpx;
 		background-color: #FFFFFF;
+		/* #ifndef APP-PLUS */
+		padding-top: $video-height;
+		overflow: auto;
+		/* #endif */
+		
+		/* #ifndef APP-PLUS */
+		.video {
+			width: 100%;
+			height: $video-height;
+			position: fixed;
+			/* #ifdef H5 */
+			top: 44px;
+			/* #endif */
+			/* #ifdef MP */
+			top: 0;
+			/* #endif */
+		}
+		/* #endif */
+		
 		.list-wrapper {
 			padding: 0 20rpx;
 			.course-title {

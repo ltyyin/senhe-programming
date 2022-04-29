@@ -54,10 +54,14 @@
 <script>
 	import { getArticleById, getArticleCommentById } from '@/api/article.js'
 	import userInfo from './components/user-info.vue'
+	import { mapState } from 'vuex'
 	
 	export default {
 		components: {
 			userInfo
+		},
+		computed: {
+			...mapState('user',['authStatus'])
 		},
 		data() {
 			return {
@@ -73,11 +77,14 @@
 			}
 		},
 		async onLoad(option) {
-			this.getArticleById(option.id)
-			this.getArticleCommentById(option.id)
+			const id = option.id
+			this.articleId = id
+			this.getArticleById(id)
+			this.getArticleCommentById(id)
 		},
 		methods: {
 			handlerFollow() {
+				if(!this.authStatus) return this.$loginTip()
 				if(this.article.isFollow === 0) {
 					this.article.isFollow = 1
 					return
@@ -85,6 +92,8 @@
 				this.article.isFollow = 0
 			},
 			handlerComment() {
+				// 判断是否进行了登录
+				if(!this.authStatus) return this.$loginTip()
 				uni.navigateTo({
 					url: `/pages/inpute/inpute?${this.articleId}`
 				})
@@ -119,7 +128,7 @@
 		background-color: $pageBackgroundColor;
 		.article-wrapper {
 			background-color: #FFFFFF;
-			padding: 40rpx 30rpx 0;
+			padding: 40rpx 30rpx;
 			.title {
 				font-weight: 600;
 				font-size: 38rpx;
@@ -148,9 +157,10 @@
 		padding: 0 40rpx;
 		width: 100%;
 		position: fixed;
-		z-index: 9999;
-		height: 50px;
-		bottom: calc( 0px + env(safe-area-inset-bottom));
+		z-index: 20;
+		bottom: 0;
+		height: calc(50px + env(safe-area-inset-bottom));
+		padding-bottom: env(safe-area-inset-bottom);
 		box-sizing: border-box;
 		.comment-btn {
 			// width: 200rpx;

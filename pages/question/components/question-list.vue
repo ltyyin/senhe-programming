@@ -13,7 +13,9 @@
 		>
 			<view class="question-scroll-wrapper">
 				<template v-for="(question,index) of questionList">
-					<question-item :key="question.id" :question-info="question" />
+					<question-item :key="question.id" :question-info="question" 
+						@click.native="handlerNavTo(question)"
+					/>
 				</template>		
 			</view>
 		</mescroll-uni>
@@ -91,6 +93,11 @@
 			}
 		},
 		methods: {
+			handlerNavTo(question) {
+				uni.navigateTo({
+					url: `/pages/question/question-detail?${question.id}`
+				})
+			},
 			
 			downCallback() {
 				this.mescroll.resetUpScroll()

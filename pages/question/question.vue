@@ -38,10 +38,10 @@
 			const windowHeight = uni.getSystemInfoSync().windowHeight
 			// #ifndef MP
 			// 需要固定swiper的高度 (需减去悬浮tabs的高度64rpx)
-			this.height = windowHeight - uni.upx2px(70) + 'px'
+			this.height = windowHeight - uni.upx2px(90) + 'px'
 			// #endif
 			// #ifdef MP
-			this.height = windowHeight - 44 - uni.upx2px(70) + 'px'
+			this.height = windowHeight - uni.upx2px(90) + 'px'
 			// #endif
 		},
 		

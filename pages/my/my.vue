@@ -6,8 +6,12 @@
 		<view class="card">
 			<cell icon="icon-dingdan" title="我的订单"
 				@click.native="handlerCell('/pages/order/my-order', true)"/>
-			<cell icon="icon-qianbao" title="我的钱包"
+			<cell icon="icon-bianjiwenzhang_huaban" title="发布文章"
+				@click.native="handlerCell('/pages/inpute/editable', true)"/>
+			<!-- #ifdef APP-PLUS -->
+			<cell v-if="isIos" icon="icon-qianbao" title="我的钱包"
 				@click.native="handlerCell('/pages/order/recharge', true)"/>
+			<!-- #endif -->
 			<cell icon="icon-_kecheng" title="我的课程"
 				@click.native="handlerCell('/pages/my-course/my-course', true)"/>
 		</view>
@@ -40,16 +44,12 @@ export default {
 	data(){
 		return {
 			name: 'lisa',
+			isIos: false,
 		}
 	},
 	computed: mapState('user',['authStatus', 'token']),
-	onReady() {
-		uni.getSystemInfo({
-			success: function (res) {
-				// console.log(res.safeArea.height);
-				// console.log(res.safeAreaInsets.bottom);
-			}
-		});
+	onLoad() {
+		if(uni.getSystemInfoSync().platform === 'ios') this.isIos = true 
 	},
 	onNavigationBarButtonTap(event) {
 		if(event.index === 0) {

@@ -1,6 +1,7 @@
 import { getRefreshToken } from "./auth.js"
 
-const BASIS_URL = 'http://192.168.0.101:5000/api'
+const BASIS_URL = 'http://192.168.1.12:5000/api'
+// const BASIS_URL = 'http://192.168.0.100:5000/api'
 
 function refreshRequest() {
 	return	new Promise((resolve,reject)=>{

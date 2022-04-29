@@ -9,6 +9,7 @@
 			@up="upCallback"
 			:bottombar="false"
 			:top="top"
+			@init="mescrollInit"
 			>
 			<view class="touch">
 				<down-bar :down-bars="downBars" @search="search"></down-bar>
@@ -56,6 +57,7 @@
 		},
 		data() {
 			return {
+				isInit: true,
 				init: true,
 				// #ifdef MP || APP-PLUS
 				top: 0,
@@ -118,7 +120,7 @@
 			},
 			
 			downCallback() {
-				// if(this.init) return
+				if(this.init) return
 				this.mescroll.resetUpScroll()
 			},
 			

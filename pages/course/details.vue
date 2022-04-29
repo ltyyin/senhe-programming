@@ -24,7 +24,9 @@
 		
 		<!-- 购物tabBar -->
 		<view class="safe-bottom"></view>
-		<uni-goods-nav class="goods-nav" :fill="true"  :options="options" :button-group="buttonGroup"  @click="onClick" @buttonClick="buttonClick" />
+		<uni-goods-nav class="goods-nav" :fill="true"  :options="options" :button-group="buttonGroup"  
+			@click="onClick" @buttonClick="buttonClick"
+		/>
 		
 		<!-- #ifndef MP -->
 		<!-- 分享层 -->
@@ -32,13 +34,16 @@
 		<!-- #endif -->
 		
 		<!-- 评论编写按钮 -->
-		<view class="write-commont-btn" v-if="tabIndex === 2" @click="navToEvaluate">
+		<view class="write-commont-btn" v-if="tabIndex === 2 && authStatus"
+			@click="navToEvaluate"
+		>
 			<text class="iconfont icon-creation"></text>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { mapState } from 'vuex'
 	import detailHead from './components/detail-head.vue'
 	import courseInfo from './components/course-info.vue'
 	import courseDir from './components/course-dir.vue'
@@ -92,6 +97,7 @@
 			}
 		},
 		computed: {
+			...mapState('user',['authStatus']),
 			buttonGroup() {
 				if(this.detailInfo.isFree || this.detailInfo.isBuy) {
 					return [
@@ -228,6 +234,8 @@
 			},
 			
 			onClick (e) {
+				if(!this.authStatus) return this.$loginTip()
+				
 				if(e.index === 1){
 					if(!this.isCollect){
 						this.isCollect = true
@@ -246,6 +254,8 @@
 				})
 			},
 			buttonClick (e) {
+				if(!this.authStatus) return this.$loginTip()
+				
 				if(e.index === 0) {					
 					this.routerTo()
 				}

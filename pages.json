@@ -200,7 +200,8 @@
 							"path":"pages/course/subNvue/video",
 							"style": {
 								"position":"dock",
-								"width":"100%",
+								"dock":"top",
+								"width":"150%",
 								"height":"250px"
 							}
 						}
@@ -337,6 +338,14 @@
 		},
 		{
 			"path": "pages/inpute/inpute",
+			"style": {
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/inpute/editable",
 			"style": {
 				"app-plus": {
 					"scrollIndicator": "none"

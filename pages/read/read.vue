@@ -42,7 +42,7 @@
 			this.height = windowHeight - uni.upx2px(90) + 'px'
 			// #endif
 			// #ifdef MP
-			this.height = windowHeight - 44 - uni.upx2px(90) + 'px'
+			this.height = windowHeight - uni.upx2px(90) + 'px'
 			// #endif
 		},
 		

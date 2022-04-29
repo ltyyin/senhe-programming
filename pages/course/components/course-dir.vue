@@ -7,7 +7,12 @@
 				:title="`章节${chapterIndex + 1} : ${chapter.title}`"
 				class="collapse-item"
 			>
-				<view class="collapse-content" v-for="(section,sectionIndex) of chapter.sectionList" :key="section.id" :class="{active: chapterIndex === currentChapter && sectionIndex === currentSection}" @click="switchPlay(chapterIndex,sectionIndex,section.isTry)">
+				<view class="collapse-content" 
+					v-for="(section,sectionIndex) of chapter.sectionList"
+					:key="section.id"
+					:class="{active: chapterIndex === currentChapter && sectionIndex === currentSection}"
+					@click="switchPlay(chapterIndex,sectionIndex,section.isTry)"
+				>
 					<text class="iconfont icon-24gf-playCircle play"></text>
 					<text class="text">{{chapterIndex + 1}}-{{sectionIndex + 1}}.{{section.courseName}}</text>
 					<template v-if="!isFree">
@@ -21,6 +26,7 @@
 </template>
 
 <script>
+	import { mapState } from 'vuex'
 	export default {
 		props: {
 			chapterList: {
@@ -34,9 +40,13 @@
 			currentChapter: null,
 			currentSection: null
 		},
+		computed: {
+			...mapState('user',['authStatus'])
+		},
 		methods: {
 			switchPlay(chapterIndex,sectionIndex,isTry) {
 				if(this.isFree || isTry) {
+					if(!this.authStatus) return this.$loginTip()
 					uni.$emit('courseIndexChange',{chapterIndex, sectionIndex, navTo: true})
 				}
 			}

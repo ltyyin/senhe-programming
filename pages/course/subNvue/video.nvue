@@ -253,10 +253,11 @@
 	
 	.video-container {
 		position: relative;
+		
 		.video {
 			position: relative;
 			transition-duration: 2s;
-			
+			width: 750rpx;
 			// 顶部标题栏的样式
 			.control-top {
 				position: absolute;
